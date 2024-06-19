@@ -1,0 +1,147 @@
+Hardware
+
+    Servers
+          Dell PowerEdge R740
+            2x Intel Xeon Silver 4214R
+            1.5TB RAM
+           8 x 2TB SSD
+           Windows Server Datacenter with Hyper V role
+
+            Dell PowerEdge R710
+            2x Intel Xeon 
+           288GB TB RAM
+           8 x 2TB SAS
+           Windows Server Datacenter with Hyper V role
+
+          Dell PowerEdge R710
+            2x Intel 
+           288GB TB RAM
+           8 x 2TB SAS
+           Windows Server Datacenter with Hyper V role
+
+          Dell PowerEdge R710
+            2x Intel 
+           288GB TB RAM
+           8 x 2TB SAS
+           Windows Server Datacenter with Hyper V role
+
+          Dell PowerEdge R510
+            2x Intel 
+        32GB TB RAM
+           12 x 6TB SAS
+           Windows Server Datacenter with Hyper V role
+
+
+    Workstations
+       Varioua Dell laptops and desktops
+            Intel Processors
+            32GB RAM
+            512GB SSD
+            Windows 11 Pro
+
+    Network Devices
+        Cisco Catalyst 3850x Series Switches
+        Cisco ASA 5506-X Firewall
+        
+
+    Storage
+        Qnap 869 Pro
+            8x 6TB HDDs configured in RAID 6
+           
+
+    Monitoring and Display Systems
+       Hi-Sense 75in 
+       
+
+Software and Tools
+
+    SIEM (Security Information and Event Management)
+        Splunk Enterprise - for firewall log only
+       Manage Engine log360 - for swicthes and firewall and Domain controller logs
+
+    Endpoint Detection and Response (EDR)
+        Wazuh
+        Velosoraptor
+        Zabbix
+
+    Intrusion Detection and Prevention Systems (IDPS)
+        ASA built in IDS
+        Security Onion
+
+    Threat Intelligence Platforms (TIP)
+        Wazuh
+      
+    Vulnerability Management
+        Manage engine Endpoint Central
+       
+    Forensics and Incident Response
+        Autopsy
+        FTK (Forensic Toolkit)
+
+    Malware Analysis
+        Cuckoo Sandbox
+        Ghidra
+
+    Virtual Machines (VMs)
+       Hyper V
+
+    Traffic Generation Tools
+        Ostinato
+        Mausezahn
+
+    Collaboration and Communication Tools
+       Goodle Workspace
+       Microsoft Teams
+
+    Ticketing System
+        JIRA Service Desk
+
+    Documentation and Knowledge Base
+        in house wiki
+        Book stack
+        File share storing the orginal documents
+
+Training Environment and Modules
+
+    Cyber Range
+        Isolated network environment for live attack simulations
+        Tools: Cyberbit Range, Immersive Labs
+
+    Training Curriculum
+        Structured modules on various cybersecurity topics
+        Platforms: SANS Cyber Aces, Cybersecurity & Infrastructure Security Agency (CISA) Training
+
+    Documentation and Resources
+        Manuals, guides, and reference materials provided through Confluence and SharePoint
+
+Physical Security
+
+    Access Control
+        HID Global Proximity Card Readers
+        Fingerprint Scanners
+
+    Surveillance
+        Axis Communications IP Cameras
+        Network Video Recorder (NVR): Hikvision DS-7616NI-E2/8P
+
+Example Layout
+
+    Server Room
+        Dedicated space for servers, storage, and network devices.
+        Controlled environment with cooling and power backup.
+
+    Workstations Area
+        Multiple desks with workstations for trainees.
+        Dual-monitor setups for better visibility and multitasking.
+
+    Monitoring Room
+        Large displays for real-time monitoring.
+        Workstations for SOC analysts with SIEM and other tools installed.
+
+    Collaboration Space
+        Meeting room equipped with video conferencing tools.
+        Whiteboards and collaboration software for planning and debriefing sessions.
+
+    Training and Simulation Room
+        Isolated environment for running cyber range exercises.
+        Equipped with workstations and networking devices for hands-on practice.
