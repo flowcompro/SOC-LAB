@@ -82,6 +82,10 @@ Software and Tools
         Cuckoo Sandbox
         Ghidra
 
+   Network server and app monitor
+        Whatsup gold
+        Observium
+
     Virtual Machines (VMs)
        Hyper V
 
@@ -117,21 +121,21 @@ Training Environment and Modules
 Physical Security
 
     Access Control
-        HID Global Proximity Card Readers
-        Fingerprint Scanners
+       Fingerprint Scanners
 
     Surveillance
-        Axis Communications IP Cameras
-        Network Video Recorder (NVR): Hikvision DS-7616NI-E2/8P
+        Wyze IP Cameras
+        Network Video Recorder 
+        Door and windo sensors
 
-Example Layout
+   Layout
 
     Server Room
         Dedicated space for servers, storage, and network devices.
         Controlled environment with cooling and power backup.
 
     Workstations Area
-        Multiple desks with workstations for trainees.
+        Multiple desks with workstations for employees
         Dual-monitor setups for better visibility and multitasking.
 
     Monitoring Room
