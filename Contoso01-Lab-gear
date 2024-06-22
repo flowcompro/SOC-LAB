@@ -9,25 +9,25 @@ Hardware
 
             Dell PowerEdge R710
             2x Intel Xeon 
-           288GB TB RAM
+           288GB RAM
            8 x 2TB SAS
            Windows Server Datacenter with Hyper V role
 
           Dell PowerEdge R710
             2x Intel 
-           288GB TB RAM
+           288GB RAM
            8 x 2TB SAS
            Windows Server Datacenter with Hyper V role
 
           Dell PowerEdge R710
             2x Intel 
-           288GB TB RAM
+           288GB RAM
            8 x 2TB SAS
            Windows Server Datacenter with Hyper V role
 
           Dell PowerEdge R510
             2x Intel 
-        32GB TB RAM
+        32GB RAM
            12 x 6TB SAS
            Windows Server Datacenter with Hyper V role
 
@@ -98,7 +98,7 @@ Software and Tools
        Microsoft Teams
 
     Ticketing System
-        JIRA Service Desk
+       Manage Engine  Service Desk Plus
 
     Documentation and Knowledge Base
         in house wiki
@@ -126,7 +126,7 @@ Physical Security
     Surveillance
         Wyze IP Cameras
         Network Video Recorder 
-        Door and windo sensors
+        Door and window sensors
 
    Layout
 
