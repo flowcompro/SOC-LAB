@@ -1,5 +1,5 @@
 # SOC-LAB
-THis is what my SOC lab and activities surounding the lab environment for improving my cyber security skill set
+This is what my SOC lab and activities surounding the lab environment for improving my cyber security skill set
 
 My Security Operations Center (SOC) lab is a specialized environment in addtion to my current lab environment designed to provide hands-on training and practical experience in cybersecurity. It replicates real-world scenarios and threats to help me develop and advance the skills needed to detect, analyze, and respond to cyber incidents. Here’s a comprehensive breakdown of what my SOC lab contains:
 1. Infrastructure and Hardware
@@ -22,7 +22,7 @@ My Security Operations Center (SOC) lab is a specialized environment in addtion 
 
 3. Simulated Environment
 
-    Virtual Machines (VMs): A variety of VMs running different operating systems (Windows, Linux, macOS) and configurations to mimic an enterprise network.
+    Virtual Machines (VMs): A variety of VMs running different operating systems (Windows, Linux) and configurations to mimic an enterprise network.
     Attack Scenarios: Pre-built scenarios involving various types of attacks (e.g., phishing, ransomware, DDoS) to train and test response capabilities.
     Realistic Traffic Generation: Tools to generate normal and malicious network traffic for realistic training.
 
@@ -35,7 +35,7 @@ My Security Operations Center (SOC) lab is a specialized environment in addtion 
 5. Collaboration and Communication Tools
 
     Ticketing System: For managing incidents, tracking progress, and documenting response actions.
-    Collaboration Platforms: Tools like Slack, Microsoft Teams, or dedicated SOC communication systems for team coordination.
+    Collaboration Platforms: Tools like Slack, Microsoft Teams, for team coordination.
     Knowledge Base: A repository of previous incidents, lessons learned, and best practices for reference.
 
 6. Security Policies and Procedures
