@@ -1,0 +1,80 @@
+Basic Networking and Linux Skills
+
+    Study networking fundamentals (TCP/IP, DNS, DHCP, etc.).
+    Gain proficiency in Linux commands and shell scripting.
+    Familiarize yourself with common networking tools (ping, traceroute, netcat).
+
+Penetration Testing Methodologies
+
+    Learn the phases of a penetration test (reconnaissance, scanning, enumeration, exploitation, and post-exploitation).
+    Understand ethical hacking principles and legal considerations.
+
+Reconnaissance Techniques
+
+    Practice using tools like Nmap, Recon-ng, and OSINT frameworks to gather information about targets.
+    Learn to identify open ports, services, and vulnerabilities.
+
+Vulnerability Scanning
+
+    Use tools such as Nessus, OpenVAS, and Nikto to identify vulnerabilities.
+    Learn how to interpret scan results and prioritize vulnerabilities.
+
+Exploitation of Vulnerabilities
+
+    Study common vulnerabilities (e.g., buffer overflows, SQL injection, cross-site scripting).
+    Practice exploiting vulnerabilities using tools like Metasploit, Burp Suite, and manual techniques.
+
+Privilege Escalation
+
+    Learn Linux and Windows privilege escalation techniques.
+    Practice exploiting misconfigurations, weak permissions, and kernel vulnerabilities.
+
+Password Attacks
+
+    Practice brute-forcing and dictionary attacks using tools like Hydra, John the Ripper, and Hashcat.
+    Learn about common password policies and best practices for cracking passwords.
+
+Buffer Overflow Exploitation
+
+    Understand the principles of buffer overflows and memory management.
+    Practice writing buffer overflow exploits and using tools like Immunity Debugger.
+
+Web Application Exploitation
+
+    Study web vulnerabilities such as SQL injection, cross-site scripting (XSS), and file inclusion.
+    Practice exploiting web applications using tools like Burp Suite, SQLmap, and manual techniques.
+
+Post-Exploitation Techniques
+
+    Learn to maintain access using backdoors, rootkits, and persistence mechanisms.
+    Practice data exfiltration and lateral movement within compromised networks.
+
+Custom Exploit Development
+
+    Study assembly language and shellcoding.
+    Practice writing custom exploits and payloads.
+
+Enumeration and Information Gathering
+
+    Use tools like Enum4linux, SNMPwalk, and SMBclient to gather information from targets.
+    Practice identifying valuable data and sensitive information.
+
+Active Directory and Windows Network Exploitation
+
+    Study Active Directory structure and common vulnerabilities.
+    Practice exploiting Windows networks and understanding domain trust relationships.
+
+CTF (Capture The Flag) Challenges
+
+    Participate in online CTF platforms like Hack The Box, TryHackMe, and VulnHub.
+    Solve challenges to practice various penetration testing skills in a controlled environment.
+
+OSCP Lab Environment
+
+    Use the official Offensive Security Proving Grounds (OSPG) or other practice labs to simulate real-world penetration testing scenarios.
+    Practice working within a time limit and documenting your findings effectively.
+
+Reporting and Documentation
+
+    Practice writing detailed penetration testing reports.
+    Learn to document findings, methodologies, and recommendations clearly and professionally.
