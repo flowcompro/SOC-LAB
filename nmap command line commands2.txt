@@ -1,0 +1,27 @@
+NETBIOS NAMES
+nmap -sV -v --script nbstat.nse TARGETIP
+
+SNMP services
+nmap -sU -p 161 --script snmp-processes TARGETIP
+
+SMTP
+nmap -p 25 --script smtp-enum-users TARGETIP
+
+DNS enumeration
+nmap --script broadcast-dns-service-discovery TARGETIP
+
+DNSSEC enumeration
+nmap -sU -p 53 --script dns-nsec-enum --script-args dns-nsec-enum. DOMAINADDY IPADDRESS
+
+RPC enumeration
+namp -T4 -A IP_RANGE_USING_CIDR
+
+SMB enumeration
+nmap -p 445 -A TARGETIP
+
+Telnet
+nmap -p 23 TARGETIP
+
+
+TO use nmap to check for a specific port
+nmap -p  PORTNUMBER TARGETIP

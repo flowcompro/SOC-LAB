@@ -1,0 +1,10 @@
+xmind app
+https://bgp.he.net/    search for AS and IP space
+typing mind -https://tdinh.lemonsqueezy.com/ chatgpt front end
+
+https://whois.arin.net
+
+crunchbase - https://www.crunchbase.com/home
+
+MASSCAN or NMAP
+

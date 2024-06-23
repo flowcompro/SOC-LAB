@@ -1,0 +1,12 @@
+sudo find / -type f -name ossec.conf
+
+
+/var/lib/docker/volumes/single-node_wazuh_etc/_data/ossec.conf
+/var/lib/docker/overlay2/7d1b33b7b06958965faefda31b20bdd2a66588b82292fdcec47d919dc071ceed/diff/var/ossec/data_tmp/permanent/var/ossec/etc/ossec.conf
+/var/lib/docker/overlay2/a4e4b373a73053699a147c31450e8ba028f3274c6a50b8173867fb7d81ffb390/diff/var/ossec/etc/ossec.conf
+/var/lib/docker/overlay2/dc702554107ab8841b67fc08cc3be5945e88d551213f1414e551363a9f37617a/merged/wazuh-config-mount/etc/ossec.conf
+/var/lib/docker/overlay2/dc702554107ab8841b67fc08cc3be5945e88d551213f1414e551363a9f37617a/diff/wazuh-config-mount/etc/ossec.conf
+/var/ossec/etc/ossec.conf
+flowcom@DOCKER1:~$
+flowcom@DOCKER1:~$ nano /var/lib/docker/volumes/single-node_wazuh_etc/_data/ossec.conf
+flowcom@DOCKER1:~$ sudo nano /var/lib/docker/volumes/single-node_wazuh_etc/_data/ossec.conf

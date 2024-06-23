@@ -1,0 +1,38 @@
+recon-ng
+run that command from the cli
+you will have to install the modules in order to be able to work with this ap
+
+use this to install all the modules
+marketplace install
+
+
+some modules need dependancies
+marketplace search metacrawler
+marketplace info metacrawler
+FROM THE INFO SCREEN you will the dependancies, install those
+must exit to normal command line to run this
+sudo pip install olefile lxml pypdf3
+
+
+
+commands to use to search 
+modules search recon
+modules search shodan
+
+
+modules search discovery
+ modules load discovery/info_disclosure/interesting_files
+ options set SOURCE YOUR_TARGET
+ run
+
+making a workspace
+
+from command line (back out of recon ng)
+create a workspace
+recon-ng -w NAMEOFWORKSPACE
+workspaces list
+
+modules load metacrawler
+modules load whois
+modules load mx_spf_ip
+

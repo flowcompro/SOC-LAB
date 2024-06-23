@@ -1,0 +1,2 @@
+sudo ./velociraptor-v0.7.0-2-linux-amd64 --config /etc/velociraptor.config.yaml frontend -v
+run it from the velocirapture dir
