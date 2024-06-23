@@ -1,0 +1,101 @@
+Standard Operating Procedure (SOP) for Building a Server VM Using Hyper-V and PXE Boot
+Purpose
+
+This document provides step-by-step instructions for building a server Virtual Machine (VM) using Hyper-V and PXE boot. This SOP ensures that the process is standardized, efficient, and error-free.
+Prerequisites
+
+    A Windows Server with Hyper-V installed and configured.
+    Network infrastructure supporting PXE boot (DHCP, TFTP server, etc.).
+    ISO image or pre-configured WDS (Windows Deployment Services) for operating system deployment.
+    Administrative access to the Hyper-V server.
+
+Procedure
+Step 1: Open Hyper-V Manager
+
+    Log in to the Windows Server where Hyper-V is installed.
+    Open Hyper-V Manager from the Start menu or by typing virtmgmt.msc in the Run dialog (Win + R).
+
+Step 2: Create a New Virtual Machine
+
+    In Hyper-V Manager, click on the server name in the left pane.
+    In the right pane, under Actions, click on "New" and then select "Virtual Machine".
+    Click "Next" on the New Virtual Machine Wizard welcome page.
+
+Step 3: Specify Name and Location
+
+    Enter a name for the VM (e.g., "ServerVM").
+    Optionally, choose a different location to store the VM files.
+    Click "Next".
+
+Step 4: Assign Memory
+
+    Specify the amount of memory (RAM) for the VM (e.g., 4096 MB).
+    Optionally, enable Dynamic Memory if required.
+    Click "Next".
+
+Step 5: Configure Networking
+
+    Choose the appropriate virtual switch for the VM to connect to the network.
+    Click "Next".
+
+Step 6: Connect Virtual Hard Disk
+
+    Select "Create a virtual hard disk".
+    Specify the name, location, and size of the virtual hard disk (e.g., 60 GB).
+    Click "Next".
+
+Step 7: Installation Options
+
+    Select "Install an operating system from a network-based installation server".
+    Ensure that the network adapter is set to boot from the network (PXE boot).
+    Click "Next".
+
+Step 8: Completing the Wizard
+
+    Review the summary of the VM settings.
+    Click "Finish" to create the VM.
+
+Step 9: Configure the VM for PXE Boot
+
+    Right-click on the newly created VM and select "Settings".
+    In the left pane, select "Firmware".
+    Ensure that the "Network Adapter" is listed as the first boot device.
+    Click "Apply" and then "OK".
+
+Step 10: Start the VM
+
+    In Hyper-V Manager, right-click on the VM and select "Start".
+    The VM will attempt to boot from the network using PXE.
+    Follow the prompts to install the operating system using PXE boot.
+
+Step 11: Monitor the Installation
+
+    Use the VM's console to monitor the installation process.
+    Complete the operating system setup as per your organization's standard procedures.
+
+Step 12: Post-Installation Configuration
+
+    Install any necessary drivers and updates.
+    Configure network settings, hostname, and other system settings.
+    Install additional software and configure the server as required.
+
+Step 13: Backup and Documentation
+
+    Take a snapshot or backup of the VM for future reference.
+    Document the VM settings, installation steps, and any configuration changes made.
+
+Notes
+
+    Ensure that the DHCP and TFTP servers are correctly configured for PXE boot.
+    Verify network connectivity and permissions before starting the installation process.
+    Review and comply with organizational policies for server deployment and configuration.
+
+Troubleshooting
+
+    If the VM does not boot from the network, verify the PXE boot settings and network adapter configuration.
+    Ensure that the DHCP server is providing the correct PXE boot information.
+    Check the TFTP server logs for any errors or issues during the boot process.
+
+Approvals
+
+    This SOP has been reviewed and approved
