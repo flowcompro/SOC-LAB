@@ -1,0 +1,142 @@
+Contoso01Labs Security Operations Center (SOC) Standard Operating Procedure (SOP)
+Purpose
+
+This SOP outlines the daily, weekly, and monthly tasks for the Contoso01Labs SOC to ensure the security, integrity, and smooth operation of all IT assets. The following applications are covered: Log30, ASA 5506, FTK, Autopsy, Zabbix, Wazuh, ManageEngine, Security Onion, Service Desk Plus, Pi-Hole, Xeams, LoadBalancer, WhatsUp Gold, and Checkmk.
+Daily Tasks
+
+    Log30 (Firewall and DC logs)
+        Review firewall logs for any unusual activity.
+        Analyze DC logs for failed login attempts and other suspicious activities.
+        Document findings and escalate any critical issues.
+
+    ASA 5506 (Intrusion Detection)
+        Check for intrusion alerts and investigate any anomalies.
+        Update intrusion detection signatures.
+        Report and document any incidents.
+
+    Zabbix (Detection and Vulnerabilities)
+        Monitor system health and performance metrics.
+        Investigate and resolve any critical alerts.
+        Ensure all monitoring agents are operational.
+
+    Wazuh (Detection and Vulnerabilities)
+        Review vulnerability scans and reports.
+        Address any high or critical vulnerabilities immediately.
+        Confirm Wazuh agents are functioning correctly.
+
+    Security Onion (Intrusion Detection, Security Monitoring, Log Management)
+        Monitor for intrusion alerts and investigate suspicious activity.
+        Analyze network traffic for signs of compromise.
+        Ensure log management systems are up-to-date.
+
+    Service Desk Plus (Ticketing System)
+        Review and triage new tickets.
+        Update and resolve existing tickets.
+        Communicate with users regarding ticket status.
+
+    Pi-Hole (Ad Blocking and DNS Tier 1)
+        Monitor Pi-Hole for DNS request anomalies.
+        Ensure Pi-Hole is blocking unwanted domains effectively.
+        Verify Pi-Hole is forwarding DNS requests to the DC for resolution.
+
+    Xeams (Email Server)
+        Check email server logs for delivery issues or suspicious emails.
+        Ensure spam and phishing filters are updated and effective.
+        Review email queues for anomalies.
+
+    LoadBalancer
+        Monitor incoming connections and ensure they are being properly distributed.
+        Check for any load balancer errors or performance issues.
+        Adjust configurations if needed to optimize traffic flow.
+
+    WhatsUp Gold (Services Uptime)
+        Verify uptime for critical services and applications.
+        Investigate and resolve any reported downtimes.
+        Document and report any recurring issues.
+
+    Checkmk (Monitoring and Alerting)
+        Monitor alerts for servers, switches, applications, and services.
+        Investigate and address any critical alerts.
+        Confirm all monitoring agents are reporting correctly.
+
+Weekly Tasks
+
+    FTK and Autopsy (Forensics)
+        Perform scheduled forensic analysis on designated systems.
+        Review forensic data for any signs of compromise or unauthorized access.
+        Document and report findings.
+
+    ManageEngine (Patching and Vulnerabilities Remediation)
+        Review pending patches and updates.
+        Apply patches to test systems before rolling out to production.
+        Verify and document the successful application of patches.
+
+    Security Onion (Log Management)
+        Perform a deeper analysis of collected logs for trends or patterns.
+        Archive older logs as per retention policy.
+        Ensure all log sources are being properly ingested.
+
+    Zabbix and Wazuh
+        Conduct a comprehensive review of the week's alerts and incidents.
+        Fine-tune monitoring and detection rules as needed.
+        Update vulnerability definitions and detection rules.
+
+Monthly Tasks
+
+    ManageEngine (Patching and Vulnerabilities Remediation)
+        Conduct a full audit of patch compliance across all systems.
+        Schedule and apply any remaining patches or updates.
+        Document and report on patch management activities.
+
+    Security Onion (Security Monitoring)
+        Conduct a full review of security monitoring data.
+        Perform a tabletop exercise or incident response drill.
+        Review and update incident response plans.
+
+    Checkmk and WhatsUp Gold
+        Perform a detailed audit of monitoring configurations.
+        Review uptime and performance trends.
+        Adjust thresholds and alerting rules based on trends.
+
+    Xeams (Email Server)
+        Perform a security audit of the email server.
+        Review email usage reports for any unusual patterns.
+        Update email security policies and filters.
+
+    Pi-Hole (Ad Blocking and DNS Tier 1)
+        Review DNS request logs for any new or emerging threats.
+        Update the blocklist with any new unwanted domains.
+        Confirm proper forwarding to the DC for DNS resolution.
+
+Incident Response
+
+    Immediate Actions
+        Upon detection of a security incident, escalate to the SOC Manager.
+        Isolate affected systems to prevent further damage.
+        Begin forensic data collection using FTK and Autopsy.
+
+    Investigation and Mitigation
+        Analyze incident data and determine the scope of the compromise.
+        Apply necessary patches, updates, or configuration changes to mitigate the threat.
+        Communicate with stakeholders about the incident status and next steps.
+
+    Post-Incident Review
+        Conduct a post-incident review to identify lessons learned.
+        Update incident response plans and SOPs based on findings.
+        Document the incident thoroughly for future reference.
+
+Documentation and Reporting
+
+    Daily Reports
+        Summarize daily activities and incidents.
+        Highlight any critical issues or findings.
+
+    Weekly Reports
+        Provide a comprehensive overview of the week's activities.
+        Include any forensic findings and patch management updates.
+
+    Monthly Reports
+        Deliver a detailed summary of the month's security posture.
+        Include trends, patterns, and recommendations for improvement.
+
+By following this SOP, Contoso01Labs SOC can ensure a proactive and comprehensive approach to IT security, monitoring, and incident response.
