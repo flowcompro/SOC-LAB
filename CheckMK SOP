@@ -1,0 +1,117 @@
+Checkmk Standard Operating Procedures (SOP)
+Daily Routines
+1. Morning System Check
+
+    Objective: Ensure all systems are running smoothly.
+    Procedure:
+        Log into the Checkmk dashboard.
+        Review the main dashboard for any critical alerts.
+        Check the status of all monitored hosts and services.
+        Acknowledge any new alerts that were not present the previous day.
+        Investigate and resolve critical alerts immediately.
+        Document any critical issues and resolutions.
+
+2. Alert Review
+
+    Objective: Stay updated on any ongoing issues.
+    Procedure:
+        Check the notifications section for any new alerts.
+        Review any acknowledged alerts for updates.
+        Ensure alerts are assigned to the appropriate personnel.
+        Follow up on any unresolved alerts from previous days.
+
+3. System Performance Review
+
+    Objective: Monitor system performance and identify potential issues.
+    Procedure:
+        Check performance graphs for key systems (CPU, memory, disk usage).
+        Identify any abnormal spikes or trends.
+        Investigate the cause of any performance issues.
+        Document findings and actions taken.
+
+Weekly Routines
+1. Full System Health Check
+
+    Objective: Comprehensive review of the system’s health.
+    Procedure:
+        Log into the Checkmk dashboard.
+        Review all monitored hosts and services.
+        Check for any new warnings or critical alerts.
+        Verify that all scheduled maintenance tasks were completed.
+        Ensure that all critical systems have recent and successful backups.
+
+2. Log Review
+
+    Objective: Identify and resolve any recurring issues.
+    Procedure:
+        Review system logs for any errors or warnings.
+        Look for patterns or recurring issues.
+        Investigate and resolve any identified issues.
+        Document findings and actions taken.
+
+3. Configuration Review
+
+    Objective: Ensure all configurations are up-to-date and correct.
+    Procedure:
+        Review the configuration of all monitored hosts and services.
+        Verify that all configurations match the current system setup.
+        Update configurations as needed.
+        Document any changes made.
+
+Monthly Routines
+1. Capacity Planning
+
+    Objective: Plan for future resource needs.
+    Procedure:
+        Review performance graphs for all systems over the past month.
+        Identify any trends in resource usage (CPU, memory, disk).
+        Predict future resource needs based on trends.
+        Plan for any necessary upgrades or changes.
+        Document capacity planning results and plans.
+
+2. Security Review
+
+    Objective: Ensure all systems are secure.
+    Procedure:
+        Review security alerts and logs.
+        Verify that all systems have the latest security patches applied.
+        Check that all user accounts and permissions are correct.
+        Review and update security policies as needed.
+        Document any security issues and actions taken.
+
+3. System Update and Patch Management
+
+    Objective: Keep all systems up-to-date.
+    Procedure:
+        Review the list of available updates and patches.
+        Schedule and apply updates and patches to all systems.
+        Verify that updates were applied successfully.
+        Test critical systems to ensure they are functioning correctly after updates.
+        Document the update and patch process and any issues encountered.
+
+Documentation and Reporting
+1. Daily Reports
+
+    Objective: Provide a summary of daily activities.
+    Procedure:
+        Create a daily report summarizing the day’s activities.
+        Include information on any critical alerts and resolutions.
+        Share the report with relevant team members.
+
+2. Weekly Reports
+
+    Objective: Provide a summary of weekly activities.
+    Procedure:
+        Create a weekly report summarizing the week’s activities.
+        Include information on any recurring issues and resolutions.
+        Share the report with relevant team members.
+
+3. Monthly Reports
+
+    Objective: Provide a summary of monthly activities.
+    Procedure:
+        Create a monthly report summarizing the month’s activities.
+        Include information on capacity planning and security reviews.
+        Share the report with relevant team members.
+
+By following this SOP, administrators can ensure that Checkmk is monitored and maintained effectively, leading to a stable and secure IT environment.
