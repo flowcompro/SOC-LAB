@@ -1,0 +1,4 @@
+snmp-server community contoso01 RO
+snmp-server community hidden RW
+snmp-server location Garage server rack
+snmp-server contact Kevin Flowers

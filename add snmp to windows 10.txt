@@ -1,0 +1,7 @@
+Get-WindowsCapability  -Online -Name "SNMP*"
+That checks to see if its installed
+
+
+to install use this
+
+Add-WindowsCapability  -Online -Name "SNMP.Client~~~~0.0.1.0"

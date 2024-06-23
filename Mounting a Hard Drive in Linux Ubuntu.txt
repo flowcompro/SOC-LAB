@@ -1,0 +1,75 @@
+https://medium.com/@sh.tsang/partitioning-formatting-and-mounting-a-hard-drive-in-linux-ubuntu-18-04-324b7634d1e0
+
+
+
+Partitioning, Formatting, and Mounting a Hard Drive in Linux Ubuntu 18.04 (2020)
+Sik-Ho Tsang
+Sik-Ho Tsang
+Follow
+Jul 4, 2018 · 4 min read
+
+
+(Not this kind of mounting. lol)
+I have a brand new 4-TB harddisk to add to my computer recently. So I need to mount it in Linux. (Sik-Ho Tsang @ Medium)
+To do this, I need to do the following:
+A. Partitioning Using Parted (for > 2GB Harddisk) (New) (Updated on 18 Jan 2020)
+B. Formatting
+C. Mounting (including auto mount after reboot)
+D. Checking whether the hard drive is mounted
+E. Partitioning Using fdisk (for < 2GB Harddisk) (Old)
+To partition a Harddisk larger than 2GB, GPT is needed, A > B > C > D.
+To partition a Harddisk smaller than 2GB, fdisk already can help, E > B > C > D.
+A. Partitioning (for >2GB Harddisk) (New) (Updated on 18 Jan 2020)
+First, after connecting the harddisk to the computer by SATA and power cables, we can check the new 4-TB harddisk by:
+sudo fdisk -l
+
+/dev/sdb is the new harddisk
+Note: You may have a different name other than sdb!!! The name sdb needs to be changed in the following steps!!!
+2. But we cannot mount it right now, if we mount it now, errors will come out. We need to partition it first, we use parted to partition:
+sudo parted /dev/sdb
+
+3. Within the parted, type the following to have gpt partition, gpt can allow partition larger than 2GB:
+mklabel gpt
+
+4. Set the size for partition, I here partition from 0GB to 4GB:
+mkpart primary 0GB 4GB
+5. Then quit the parted:
+quit
+
+B. Formatting
+Format the newly partitioned harddisk:
+sudo mkfs.ext4 /dev/sdb
+
+C. Mounting (including auto mount after reboot)
+Usually drive is mounted in /mnt/. Create a new directory in /mnt/ first.
+sudo mkdir /mnt/sdb
+2. Then we can mount it by:
+sudo mount /dev/sdb /mnt/sdb
+
+3. But we need to mount it for every time we reboot. To mount it automatically after each reboot, I use nano to modify the file /etc/fstab:
+nano /etc/fstab
+4. Enter following at the end of file:
+/dev/sdb     /mnt/sdb      ext4        defaults      0       0
+The first item is the path for the hard drive. The second one is the destination for the mounted drive, where we want to mount. The third one is the format type. The forth to sixth one I just kept as defaults, 0 and 0.
+
+D. Checking whether the hard drive is mounted
+There are 3 methods to check. Three of them can also find the mounted hard drive sdb.
+mount
+mount | grep sdb
+E. Partitioning Using fdisk (for <2GB Harddisk) (Old)
+First, after connecting the harddisk to the computer by SATA and power cables, we can check the new 4-TB harddisk by:
+sudo fdisk -l
+
+/dev/sdb is the new harddisk
+2. But we cannot mount it right now, if we mount it now, errors will come out. We need to partition it first:
+sudo fdisk /dev/sdb
+
+3. If we enter m for help, we can see the command list.
+
+
+4. To check the partition table, enter p.
+
+5. To partiton, enter n. I then just choose primary by entering p. And enter 1 for only one partition number.
+
+6. Enter w to write the partition table to disk.
+

@@ -1,0 +1,29 @@
+https://www.tachytelic.net/2019/05/check-file-exists-powershell/
+
+Check if a file exists
+$fileToCheck = "C:\tmp\test.txt"
+if (Test-Path $fileToCheck -PathType leaf)
+{
+    #do some stuff
+}
+Delete file if it exists
+$fileToCheck = "C:\tmp\test.txt"
+if (Test-Path $fileToCheck -PathType leaf)
+{
+    Remove-Item $fileToCheck
+}
+An even shorter method….
+
+$fileToCheck = "c:\tmp\test.txt"
+Remove-Item $fileToCheck -ErrorAction Ignore
+
+
+
+
+Check if a file exists and move it to a new location
+$fileToCheck = "C:\tmp\test.txt"
+$newPath = "c:\tmp\newFolder"
+if (Test-Path $fileToCheck -PathType leaf) 
+{
+    Move-Item -Path $fileToCheck -Destination $newPath
+    "$fileToCheck moved to $newPath"

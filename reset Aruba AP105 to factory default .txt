@@ -1,0 +1,13 @@
+http://geekbuddy.blogspot.com/2011/12/how-to-reset-aruba-networks-ap105-to.html
+
+
+If you need to reset your Aruba AP105 to factory default it's really simple.
+1.Connect the serial console breakout adapter cable to the AP Ethernet port and your PC/Laptop
+2.Power on the AP and get into apboot mode. You'll see the option to go into AP boot mode when the AP is booting. You will have to press Enter within a 1 second window so pay attention to console messages during bootup. prompt says Hit <Enter> to stop autoboot:
+3.From the apboot prompt, enter the following commands
+apboot> factory_reset
+apboot> purgeenv
+apboot> save
+apboot> boot
+
+That's it! Your Aruba AP's will now be set back to factory default.

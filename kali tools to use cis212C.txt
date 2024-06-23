@@ -1,0 +1,21 @@
+OWASP
+ integrated penetration testing tool for finding vulnerabilities in web applications. It is designed to be used by people with a wide range of security experience and as such is ideal for developers and functional testers who are new to penetration testing as well as being a useful addition to an experienced pen testers toolbox.
+
+python golismero.py IP
+GoLismero is an open source framework for security testing. It’s currently geared towards web security, but it can easily be expanded to other kinds of scans.
+
+urlcrazy URL_OF_TARGET
+Generate and test domain typos and variations to detect and perform typo squatting, URL hijacking, phishing, and corporate espionage.
+
+
+install first
+
+searchsploit KEYWORD_TO_SEARCH_FOR
+a command line search tool for Exploit-DB that also allows you to take a copy of Exploit Database with you, everywhere you go. SearchSploit gives you the power to perform detailed off-line searches through your locally checked-out copy of the repository. This capability is particularly useful for security assessments on segregated or air-gapped networks without Internet access.
+
+sudo git clone https://github.com/leebaird/discover.git
+                                                                             
+on nerwer version
+cd discover
+sudo  ./update.sh
+discover.sh 

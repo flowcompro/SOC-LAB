@@ -1,0 +1,42 @@
+https://www.jacquesinit.com/blog/ccmsetup-failed-with-error-code-0x80041010/
+
+dir /b *.mof *.mfl | findstr /v /i uninstall > moflist.txt & for /F %s in (moflist.txt) do mofcomp %s
+
+
+
+If you see this error in your ccmsetup log file it may point to WMI classes not properly registered or corrupt. There are two methods that you can try to resolve this.
+
+Method 1:
+
+Open a command prompt in Administrator mode and change to folder c:\windows\system32\wbem.
+Run the following command:
+
+dir /b *.mof *.mfl | findstr /v /i uninstall > moflist.txt & for /F %s in (moflist.txt) do mofcomp %s
+
+Method 2:
+
+Save and run the following script in a command prompt:
+
+Net Stop winmgmt
+C:
+CD%SystemRoot%\System32\wbem
+RD /S /Q repository
+regsvr32 /s %SystemRoot%\system32\scecli.dll
+regsvr32 /s %SystemRoot%\system32\userenv.dll
+for /f %%s in (‘dir /b /s *.dll’) do regsvr32 /s %%s
+scrcons.exe /regserver
+unsecapp.exe /regserver
+winmgmt.exe /regserver
+wmiadap.exe /regserver
+wmiapsrv.exe /regserver
+wmiprvse.exe /regserver
+mofcomp cimwin32.mof
+mofcomp cimwin32.mfl
+mofcomp rsop.mof
+mofcomp rsop.mfl
+for /f %%s in (‘dir /b *.mof’) do mofcomp %%s
+for /f %%s in (‘dir /b *.mfl’) do mofcomp %%s
+ECHO.
+ECHO DONE, A system restart is recommended…
+ECHO.
+Pause

@@ -1,0 +1,14 @@
+Find Vulnerable Services & Hidden Info Using Google Dorks [Tutorial]
+https://www.youtube.com/watch?v=u_gOnwWEXiA
+full tutorial
+https://null-byte.wonderhowto.com/how-to/find-passwords-exposed-log-files-with-google-dorks-0198557/
+
+cached Nameofwebsite
+
+allintext:username filetype:log
+inurl/proc/self/cwd
+intitle"index of" inurl ftp
+intitle:"webcamXP 5"
+intitle:"webcam 7" inurl:'/gallery.html'
+db_password filetype:env
+intitle:"report"(*qualys" | "acunetix" | "nessus" | "netsparker" | "nmap") filetype:pdf

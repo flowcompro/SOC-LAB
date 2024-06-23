@@ -1,0 +1,10 @@
+https://github.com/pi-hole/pi-hole/#one-step-automated-install
+NOTE:  to update pihole - pihole -up
+
+
+sudo apt install git
+
+git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
+cd "Pi-hole/automated install/"
+sudo bash basic-install.sh
+

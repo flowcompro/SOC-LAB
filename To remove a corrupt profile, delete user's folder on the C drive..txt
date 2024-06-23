@@ -1,0 +1,12 @@
+To remove a corrupt profile, delete user's folder on the C: drive. 
+
+Next run "regedit".  
+Click->Local_Machine
+	Software
+	Microsoft
+	-Windows NT
+		-Current Version
+			-Profile list
+  Highlight each profile and you'll see the user's name displayed to the right then delete.
+
+Next have the user log back into the computer.  A new profile will be created.

@@ -1,0 +1,70 @@
+https://access.redhat.com/solutions/4386921
+
+I did it using  https://www.linuxbuzz.com/install-cockpit-web-console-on-rhel/
+
+
+How I did it
+
+
+1) Install Cockpit Package
+Cockpit package and its dependencies are available in the default RHEL 9 yum repositories. So, it’s installation is straight forward, open terminal and run following dnf command.
+
+$ sudo dnf install cockpit -y
+dnf-install-cockpit-rhel9
+
+If you wish to manage KVM virtual machines using cockpit console then install following,
+
+$ sudo dnf install cockpit-machines -y
+In addition, if you want to manage podman containers from cockpit console, then install following,
+
+$ sudo dnf install cockpit-podman -y
+Install-cockpit-podman-rhel9
+2) Start Cockpit Service
+Once the package is installed, we need to enable the Cockpit service so it can automatically start on boot. To do this, run the following command:
+
+$ sudo systemctl start cockpit
+Run following systemctl command to verify it’s service
+
+$ sudo systemctl status cockpit
+
+3) Configure Firewall Rule for Cockpit
+Cockpit runs on port 9090 by default. If you have a firewall enabled on your server, you will need to open this port to allow access to the web console. To do this, run the following commands:
+
+$ sudo firewall-cmd --add-port=9090/tcp –permanent
+$ sudo firewall-cmd –reload
+4) Access Cockpit Web Console
+Now that the Cockpit service is enabled and the firewall is configured, you can access the web console by navigating to the following URL in your web browser:
+
+https://<Your-Server-IP>:9090
+
+
+
+
+
+
+
+
+
+
+
+This is from RED Hat site
+
+To install the cockpit package just issue the below command-line:
+
+Raw
+# yum install -y cockpit
+Red Hat Enterprise Linux 8 includes the RHEL 9 web console installed by default in many installation variants.
+
+Raw
+# rpm -qa | grep cockpit
+Enable the cockpit service and start using Cockpit
+
+Raw
+# systemctl enable --now cockpit.socket
+If the web console was not installed by default on your installation variant and you are using a custom firewall profile, add the cockpit service to firewalld to open port 9090 in the firewall:
+
+Raw
+# firewall-cmd --add-service=cockpit --permanent
+# firewall-cmd --reload
+
+Open any browser and in the address add http://server-ip:9090 or http://localhost:9090, and log in by providing the username and password

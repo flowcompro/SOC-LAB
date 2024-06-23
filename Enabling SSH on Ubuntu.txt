@@ -1,0 +1,41 @@
+http://docs/books/how-to-enable-ssh-on-ubuntu
+
+Enabling SSH on Ubuntu
+
+HOW I DID IT
+
+sudo apt update
+sudo apt install openssh-server
+sudo systemctl status ssh
+q
+sudo ufw allow ssh
+
+  all done
+
+
+from the website
+
+
+
+
+Open your terminal either by using the Ctrl+Alt+T keyboard shortcut or by clicking on the terminal icon and install the openssh-server package by typing:
+
+sudo apt update
+sudo apt install openssh-server
+Enter the password when prompted and enter Y to continue with the installation.
+
+
+Once the installation is completed, the SSH service will start automatically. To verify that the installation was successful and SSH service is running type the following command which will print the SSH server status:
+
+sudo systemctl status ssh
+You should see something like Active: active (running) :
+
+
+Press q to get back to the command line prompt.
+
+Ubuntu comes with a firewall configuration tool called UFW. If the firewall is enabled on your system, make sure to open the SSH port:
+
+sudo ufw allow ssh
+Now that SSH is installed and running on your Ubuntu system you can connect to it via SSH from any remote machine. Linux and macOS systems have SSH clients installed by default. If you want to connect from a Windows machine then you can use an SSH client such as PuTTY.
+
+Conn

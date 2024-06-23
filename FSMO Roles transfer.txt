@@ -1,0 +1,144 @@
+
+for server 2019 
+https://docs.microsoft.com/en-us/powershell/module/addsadministration/move-addirectoryserveroperationmasterrole?view=win10-ps
+
+$Server = Get-ADDomainController -Identity "TK5-CORP-DC-10.fabrikam.com"
+Move-ADDirectoryServerOperationMasterRole -Force -Identity $Server -OperationMasterRole SchemaMaster,DomainNamingMaster,PDCEmulator,RIDMaster,InfrastructureMaster
+
+Old method
+
+https://www.petri.com/transferring_fsmo_roles
+
+
+Transferring the RID Master, PDC Emulator, and Infrastructure Masters via GUI
+
+To Transfer the Domain-Specific RID Master, PDC Emulator, and Infrastructure Master FSMO Roles:
+
+Open the Active Directory Users and Computers snap-in from the Administrative Tools folder.
+If you are NOT logged onto the target domain controller, in the snap-in, right-click the icon next to Active Directory Users and Computers and press Connect to Domain Controller.
+Select the domain controller that will be the new role holder, the target, and press OK.
+Right-click the Active Directory Users and Computers icon again and press Operation Masters.
+Select the appropriate tab for the role you wish to transfer and press the Change button.
+Press OK to confirm the change.
+Press OK all the way out.
+Transferring the Domain Naming Master via GUI
+
+To Transfer the Domain Naming Master Role:
+
+Open the Active Directory Domains and Trusts snap-in from the Administrative Tools folder.
+If you are NOT logged onto the target domain controller, in the snap-in, right-click the icon next to Active Directory Domains and Trusts and press Connect to Domain Controller.
+Select the domain controller that will be the new role holder and press OK.
+Right-click the Active Directory Domains and Trusts icon again and press Operation Masters.
+Press the Change button.
+Press OK to confirm the change.
+Press OK all the way out.
+Transferring the Schema Master via GUI
+
+Sponsored
+
+ 
+Sponsored
+
+To Transfer the Schema Master Role:
+Register the Schmmgmt.dll library by pressing Start > RUN and typing:
+
+regsvr32 schmmgmt.dll
+1
+regsvr32 schmmgmt.dll
+Press OK. You should receive a success confirmation.
+From the Run command open an MMC Console by typing MMC.
+On the Console menu, press Add/Remove Snap-in.
+Press Add. Select Active Directory Schema.
+Press Add and press Close. Press OK.
+If you are NOT logged onto the target domain controller, in the snap-in, right-click the Active Directory Schema icon in the Console Root and press Change Domain Controller.
+Press Specify …. and type the name of the new role holder. Press OK.
+Right-click right-click the Active Directory Schema icon again and press Operation Masters.
+Press the Change button.
+Press OK all the way out.
+Transferring the FSMO Roles via Ntdsutil
+
+To transfer the FSMO roles from the Ntdsutil command:
+
+Caution: Using the Ntdsutil utility incorrectly may result in partial or complete loss of Active Directory functionality.
+
+On any domain controller, click Start, click Run, type Ntdsutil in the Open box, and then click OK.
+
+Microsoft Windows [Version 5.2.3790]
+(C) Copyright 1985-2003 Microsoft Corp.
+
+C:\WINDOWS&gt;ntdsutil
+ntdsutil:
+1
+2
+3
+4
+5
+Microsoft Windows [Version 5.2.3790]
+(C) Copyright 1985-2003 Microsoft Corp.
+ 
+C:\WINDOWS&gt;ntdsutil
+ntdsutil:
+Type roles, and then press ENTER.
+
+ntdsutil: roles
+fsmo maintenance:
+1
+2
+ntdsutil: roles
+fsmo maintenance:
+Note: To see a list of available commands at any of the prompts in the Ntdsutil tool, type ?, and then press ENTER.
+
+Type connections, and then press ENTER.
+
+fsmo maintenance: connections
+server connections:
+1
+2
+fsmo maintenance: connections
+server connections:
+Type connect to server <servername>, where <servername> is the name of the server you want to use, and then press ENTER.
+
+server connections: connect to server server100
+Binding to server100 ...
+Connected to server100 using credentials of locally logged on user.
+server connections:
+1
+2
+3
+4
+server connections: connect to server server100
+Binding to server100 ...
+Connected to server100 using credentials of locally logged on user.
+server connections:
+At the server connections: prompt, type q, and then press ENTER again.
+
+server connections: q
+fsmo maintenance:
+1
+2
+server connections: q
+fsmo maintenance:
+Type transfer <role>. where <role> is the role you want to transfer.
+For example, to transfer the RID Master role, you would type transfer rid master:
+
+Options are:
+
+
+Transfer domain naming master
+Transfer infrastructure master
+Transfer PDC
+Transfer RID master
+Transfer schema master
+1
+2
+3
+4
+5
+Transfer domain naming master
+Transfer infrastructure master
+Transfer PDC
+Transfer RID master
+Transfer schema master
+You will receive a warning window asking if you want to perform the transfer. Click on Yes.
+After you transfer the roles, type q and press ENTER until you quit Ntdsutil.exe.
+Restart the server and make sure you update your backup.

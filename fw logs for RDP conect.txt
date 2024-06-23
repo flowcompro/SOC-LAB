@@ -1,0 +1,40 @@
+	3/3/20
+3:22:12.000 PM	
+Mar  3 15:22:12 10.192.30.149 l4d: RS 10.192.90.200:3389 re-enabled on VS 10.192.30.101:3389(Remote Desktop Services)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: RS 10.192.90.200:3389 on VS 10.192.30.101:3389 is no longer being used.
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (185.202.1.232:8564->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (185.202.1.232:8564->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (185.153.199.133:28131->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (185.202.1.235:12668->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (185.202.1.235:12668->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (92.63.194.15:49662->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:21:29.000 PM	
+Mar  3 15:21:29 10.192.30.149 kernel: L7: Real Server Connect failed (92.63.194.15:49662->10.192.30.101:3389->10.192.90.200:3389)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa
+3/3/20
+3:19:27.000 PM	
+Mar  3 15:19:27 10.192.30.149 l4d: RS 10.192.90.200:3389 disabled on VS 10.192.30.101:3389(Remote Desktop Services)
+host = 10.192.30.149source = udp:514sourcetype = cisco:asa

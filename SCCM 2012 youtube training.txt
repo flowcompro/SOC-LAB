@@ -1,0 +1,51 @@
+
+
+p1 intro
+https://www.youtube.com/watch?v=VGn2KyNd3qo&t=14s
+
+p2 - pre reqs
+https://www.youtube.com/watch?v=ysbPiGsTGGc
+
+p3  SQL install
+https://www.youtube.com/watch?v=oESya51X5Bs
+
+p4 Client Settings and Install SCCM Client
+https://www.youtube.com/watch?v=kzFZ02NU-Ms
+
+p5 SCCM Basic Configurations
+https://www.youtube.com/watch?v=d34UQD_sxyk&t=27s
+
+p6  SCCM Client Push Installation
+https://www.youtube.com/watch?v=ym7g87YAqxM&t=8s
+
+p7 Working with Collections
+https://www.youtube.com/watch?v=6SEOvkrKkFs
+
+p8 Deploying Application and Troubleshooting
+https://www.youtube.com/watch?v=57YB_w-5iBc
+
+p9 Deployment of EXE file
+https://www.youtube.com/watch?v=csvZRT84MWk
+
+p10 Right Click Tools
+https://www.youtube.com/watch?v=VmEQ7RqDXJw
+
+
+p11A Software Update Point - SUP and WSUS
+https://www.youtube.com/watch?v=bdRGpZ8-g14
+08 - How to Deploy Software Updates Using Microsoft SCCM
+https://www.youtube.com/watch?v=6JHJes1u8Pg
+
+
+p11b SUP and WSUS
+https://www.youtube.com/watch?v=JKc6mlf6Qxs
+
+p12a OSD Infrastructure Preperation
+https://www.youtube.com/watch?v=i0XVv6GHcaU
+
+p12b OSD Capture Image
+https://www.youtube.com/watch?v=Y2P491AtDw0
+
+p12c OSD Deployment and Task Sequence
+https://www.youtube.com/watch?v=w5qGR4EdFY0
+

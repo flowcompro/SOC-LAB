@@ -1,0 +1,25 @@
+Windows 10 deployments fail with Microsoft Deployment Toolkit on computers with BIOS type firmware
+
+Download the file here
+https://download.microsoft.com/download/3/0/6/306AC1B2-59BE-43B8-8C65-E141EF287A5E/KB4564442/MDT_KB4564442.exe
+
+
+
+After you download and extract the contents of the self extracting compressed file, MDT_KB4564442.exe, use the following steps to replace the original files on any affected computers with the Microsoft Deployment Toolkit installed.
+
+Close the Deployment Workbench.
+
+Backup the existing x86 and x64 versions of the Microsoft.BDD.Utility.dll file in the following locations.
+%ProgramFiles%\Microsoft Deployment Toolkit\Templates\Distribution\Tools\x86\
+%ProgramFiles%\Microsoft Deployment Toolkit\Templates\Distribution\Tools\x64\
+
+Copy the new files extracted from MDT_KB4564442.exe over the old versions.
+
+For each deployment share that you have created, repeat the file replacement (e.g. C:\DeploymentShare\Tools\x86, C:\DeploymentShare\Tools\x64, etc.).
+
+Open the Deployment Workbench, select the Deployment Share and choose the Update Deployment Share option, choosing to completely regenerate the boot image.  Perform this step for each deployment share to ensure each one is updated with the correct binaries.
+
+Prerequisites
+
+This update is only intended for computers with the Microsoft Deployment Toolkit build 8456 installed.
+Earlier versions of Microsoft Deployment Toolkit do not support Windows Assessment and Deployment Kit (ADK) for Windows 10, version 2004.

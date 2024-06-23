@@ -1,0 +1,80 @@
+https://www.youtube.com/watch?v=WnN6dbos5u8
+
+su - switches account back to root
+cat /etc/passwd  - shows contents of password file
+cat /etc/shadow -  password shadow file
+ 
+
+to see where things are logged go to
+cd /var/log
+ls -la -- you should see the syslog folder
+cat syslog
+cat auth.log |grep root 
+
+apt install git
+apt install ftp
+apt purge *impacket*
+
+cd /opt/
+
+install impacket go to impacket git hub and install
+git clone https://github.com/TarlogicSecurity/kerbrute
+cd kerbrute
+pip install -r requirements.txt
+
+go back to opt directory
+git clone https://github.com/SecureAuthCorp/impacket.git
+cd /opt/impacket
+pip install .
+
+service apache2 start
+service ssh start
+service postgresql start
+those will start and run until reboot
+to make them always start use systemctl enable servicename
+systemctl enable postgresql
+stopped at 1:23:13
+ ping script talking points
+cat ip.txt | grep "64 bytes"
+cat ip.txt | grep "64 bytes" | cut -d " " -f 4 - display 4 fireld for file
+cat ip.txt | grep "64 bytes" | cut -d " " -f 4 |tr -d ":"   - removes colon
+
+create script  1:29:30
+open nano
+for ip `seq 1 254`; do
+ping -c 1 $1.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" &
+done
+
+if you try to run it it wont , you have to change permissions
+
+at 1:34
+use chmod +x ipsweep.sh 
+
+run it by using
+./ipsweep.sh 10.192.30 
+./ipsweep.sh 10.192.30.> iplist.txt
+at 1:35
+cat iplist.txt
+
+at 1:37
+edit the script agian 
+ add the following for mistake checking
+if [ "$1" == ""]
+then
+echo "you forgot to format for the firt three octets"
+echo "the systax is ./ipsweep.sh X.X.X"
+
+else
+
+at 1:39  one liners
+if you want to run nmap scan
+
+for ip in $(cat iplist.txt); do nmap -p 80 -T4 $ip & done
+
+at 1:43  lesson 2 python
+
+
+
+
+
+
