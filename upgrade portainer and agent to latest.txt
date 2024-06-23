@@ -1,0 +1,38 @@
+https://docs.portainer.io/start/upgrade/docker
+
+sudo docker stop portainer
+sudo docker rm portainer
+
+FOR CE edition
+sudo docker pull portainer/portainer-ce:latest
+
+sudo docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+
+and your done
+
+For business
+
+(note You will need the licence key)
+MY key for labs server
+2-RdWCmpsfQhJXFOoR0P2+G5kSFISu1pE77KDpsWbgjS0AJEddvCcETRjTSE9sa8kgybeym9392XxSkgknJQ==)
+
+sudo docker pull portainer/portainer-ee:latest
+
+sudo docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ee:latest
+
+and your done
+
+
+
+
+
+FOR AGENT UPGRADE
+
+Agent-only upgrade
+To upgrade to the latest version of Portainer Agent, use the following commands to stop then remove the old version. Your other applications/containers will not be removed.
+
+sudo docker stop portainer_agent
+sudo docker rm portainer_agent
+sudo docker pull portainer/agent:latest
+sudo docker run -d -p 9001:9001 --name portainer_agent --restart=always -v /var/run/docker.sock:/var/r
+

@@ -1,0 +1,60 @@
+# Get the list of computers to restart
+$computers = Get-Content C:\computerlist.txt
+
+# Restart each computer
+foreach ($computer in $computers) {
+  Restart-Computer -ComputerName $computer -Force
+}
+To use this script, create a text file called computerlist.txt and place it in the root of the C: drive. In this text file, specify the name or IP address of each computer that you want to restart, with one computer per line.
+
+Then, run the script by opening a PowerShell window and entering .\restart-computers.ps1. The script will read the list of computers from the text file and restart each one in turn.
+
+Note that this script will forcibly restart each computer, which means that any unsaved work will be lost. Make sure to save any important work before running the script.
+
+
+----------------------------------------------------
+
+# Prompt for the computer name
+$computer = Read-Host "Enter the name of the computer to restart"
+
+# Restart the computer
+Restart-Computer -ComputerName $computer -Force
+To use this script, copy the code and paste it into a text editor, such as Notepad. Save the file as restart-computer.ps1. Then, open a PowerShell window and navigate to the location where you saved the script. Finally, run the script by entering .\restart-computer.ps1.
+
+When the script runs, it will prompt you to enter the name of the computer that you want to restart. Once you have entered the name, the script will forcibly restart the specified computer.
+
+Note that this script will forcibly restart the computer, which means that any unsaved work will be lost. Make sure to save any important work before running the script.
+
+
+--------------------------------------
+# Prompt for input method
+$inputMethod = Read-Host "Enter 'M' to manually enter computer names or 'L' to paste a list of computer names"
+
+# Get the list of computers to restart
+if ($inputMethod -eq "M") {
+  # Manually enter the computer names
+  $computers = Read-Host "Enter the names of the computers to restart, separated by commas"
+  $computers = $computers -split ","
+}
+elseif ($inputMethod -eq "L") {
+  # Paste a list of computer names
+  $computers = Get-Content -Raw
+}
+else {
+  Write-Host "Invalid input method"
+  return
+}
+
+# Restart each computer
+foreach ($computer in $computers) {
+  Restart-Computer -ComputerName $computer -Force
+}
+
+
+To use this script, copy the code and paste it into a text editor, such as Notepad. Save the file as restart-computers.ps1. Then, open a PowerShell window and navigate to the location where you saved the script. Finally, run the script by entering .\restart-computers.ps1.
+
+When the script runs, it will prompt you to choose an input method. If you choose to manually enter the computer names, the script will prompt you to enter the names of the computers to restart, separated by commas. If you choose to paste a list of computer names, the script will wait for you to paste the list and then press enter.
+
+The script will then forcibly restart each of the specified computers.
+
+Note that this script will forcibly restart the computers, which means that any unsaved work will be lost. Make sure to save any important work before running the script.

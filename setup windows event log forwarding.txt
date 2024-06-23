@@ -1,0 +1,103 @@
+https://adamtheautomator.com/windows-event-collector/
+
+Enabling WinRM on the Windows Event Collector
+Windows Server instances that forward events to the collector do so over PowerShell Remoting or WinRM. You’ll first have to ensure WinRM is available on your collector. If the collector is running Windows Server 2012 R2 and above, WinRM is enabled by default, but the Windows Firewall may be interfering.
+
+Run the the Enable-PSRemoting PowerShell cmdlet with no parameters on the collector. Even if PowerShell Remoting is already enabled, it will skip the necessary steps.
+
+To be sure, you can also run Invoke-Command -ComputerName <COLLECTORHOSTNAME> -ScriptBlock {1} from a remote computer. If you don’t receive an error, PowerShell Remoting is working.
+
+
+
+Starting the Subscription Collector Service
+
+Now that PowerShell Remoting is enabled and listening, start the subscription collector service. The subscription collector service needs to also start up automatically when Windows Server boots up.
+
+On the collector, open Event Viewer click on Subscriptions. The first time you open the Subscriptions option, Windows will ask if you want to start the Windows Event Log Collector Service and configured to start automatically. Click Yes to accept.
+
+Setting up the Forwarders’ GPO
+The next step is to configure one or more Windows servers to begin forwarding event logs to the collector. The easiest way to do so is by creating a GPO. This GPO can then be applied to one or more OUs which contain the servers to send events from.
+
+You’ll learn the basics of setting up the necessary settings in a GPO in this Project article. But if you’d like to a complete rundown with all the available options, check out the Microsoft documentation.
+
+Allowing the Network Service to Read Event Logs
+WEF uses the Network Service account to read and send events from a forwarder to a collector. By default, the Network Service account does not have access to do this. You’ll first need to set this ACL to allow it.
+
+Note: Many of the event logs in Windows Server already provide the Network Service account access to the common event logs like Application and System. But the account is not given access to the Security event log and other custom event logs.
+
+To allow the Network Service account to read event logs on event log forwarders, use a GPO. In this article, you’ll learn how to allow the Network Service account access to the Security event log. Other event logs will follow the same process.
+
+1. Begin by opening up a command prompt and running wevtutil gl security. This will provide various information about the Security event log. But the piece to pay attention to is the channelAccess SDDL.
+
+You can see below an example of the SDDL you’ll need for the Security event log. The channelAccess line represents the permissions set on the event log. Copy the SDDL highlighted below and save it somewhere for later to add to a GPO.
+
+
+channelAccess SDDL
+channelAccess SDDL
+2.  Create a GPO via the Group Policy Management Console. Inside of the GPO, navigate to Computer Configuration ? Policies ? Administrative Templates ? Windows Components ? Event Forwarding ? Configure target subscription manager.
+
+3.  Set the value for the target subscription manager to the WinRM endpoint on the collector. You will set the Server to be in the format:
+
+Server=http://<FQDN of the collector>:5985/wsman/SubscriptionManager/WEC,Refresh=60
+
+Note the Refresh interval at the end of the collector endpoint. The Refresh interval indicates how often clients should check in to see if new subscriptions are available.
+
+4.  Next, find the SDDL you copied earlier from running wevtutil gl security and paste it into the setting Computer Configuration ? Policies ? Administrative Templates ? Windows Components ? Event Log Service ? Security ? Configure log access.
+
+Note that this SDDL will take precedence over all other permissions that have been configured for the event log.
+
+
+You can see an example of what your GPO will look like below for the Security event log.
+
+Configure log access GPO setting
+Configure log access GPO setting
+5.  Once the GPO is created, you’ll then either link this GPO to an existing OU containing the Windows servers to send event logs from or create a new OU and link the GPO. Any AD computer account you add to this OU will now set up a subscription to the collector.
+
+Setting up a Subscription
+While configuring WEF to collect all events for all Windows servers in an Active Directory domain may seem like a good idea, it’s not. You must be selective and only forward events that are important to you. Filtering out the noise from what matters is where WEF demonstrates its true value.
+
+Let’s work through setting up a subscription for the Security Event log.
+
+Since you’ve already created the GPO and linked it to an Active Directory OU containing the Windows servers you’d like to send events from, the event sources are already set up
+
+
+On the collector, open the Windows Event Viewer and right-click on Subscriptions, then create subscription.
+Creating an event log subscription
+Creating an event log subscription
+
+2.  As shown below, select the Source computer initiated option and then click Select Computer Groups. This is where you will select which computers you’d like to forward events from.
+
+Setting an event log source
+Setting an event log source
+
+Pro Tip: Selecting AD Groups. Ex: “Domain Controllers” will auto-populate any computers within the group. No need to select individual computers every time you add a new server.
+
+3.  Next select the events to forward. Opening up the query filter as you can see below, select Security to forward events to the collector from the Security event log.
+
+Selecting Windows events to forward
+Selecting Windows events to forward
+4.  Once the Security log is selected, you can filter down even more by entering the event ID, keywords, users and computers as shown below.
+
+
+Know Not Just How Your Emails Performed, But What To Do Better Next Time.
+Improve your marketing with recommendations backed by data points based on the billions of emails we send.
+SPONSORED BY MAILCHIMP
+LEARN MORE
+Filtering Windows events
+Filtering Windows events
+5.  Click OK to exit from the Query Filter.
+
+6.  Click Advanced in the Subscription Properties window. Now select Minimize Latency. This setting will ensure the collector will receive events as soon as possible and also to help it catch up if it gets behind.
+
+Setting Minimize Latency
+Setting Minimize Latency
+
+Verifying the WEF Configuration
+Once WEF is set up, you should now check to see if the forwarders actually checked in by checking the Source Computers column on the main Subscriptions page.
+
+Event Log subscriptions
+Event Log subscriptions
+You can also check the Event Forwarding Plugin Operational log under Applications and Services on the client to make sure everything is working. This is where you’ll see descriptive errors if something has gone awry with Kerberos or firewalls.
+
+
+

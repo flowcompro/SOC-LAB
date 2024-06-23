@@ -1,0 +1,33 @@
+https://productkey.national-park.com/windows-server-2019-product-key-free/
+h
+ttps://getproductkey.net/windows-server-2019-product-key-free/
+Windows Server 2019 Product Key Free 2021
+VK7JG-NPHTM-C97JM-9MPGT-3V66T
+MH37W-N47XK-V7XM9-C7227-GCQG9
+XGVPP-NMH47-7TTHJ-W3FW7-8HV2C
+X4XQN-VMKJH-7TCVD-TB3QT-KTPKM
+
+GVLK Keys for Windows Server 2022, 2019 and Windows 10 LTSC
+The list of public KMS activation keys (GVLK – Generic Volume License Key) for different Windows Server 2022, 2019, and Windows 10 LTSC editions are given in the following table:
+
+Windows Edition	GVLK Key
+Windows Server 2019 Datacenter	WMDGN-G9PQG-XVVXX-R3X43-63DFG
+Windows Server 2019 Standard	N69G4-B89J2-4G8F4-WWYCC-J464C
+Windows Server 2019 Essentials	WVDHN-86M7X-466P6-VHXV7-YY726
+Windows 10 Enterprise LTSC 2019	M7XTQ-FN8P6-TTKYV-9D4CC-J462D
+Windows 10 Enterprise N LTSC 2019	92NFX-8DJQP-P6BBQ-THF9C-7CG2H
+Windows Server 2022 Datacenter	WX4NM-KYWYW-QJJR4-XV3QB-6VM33
+Windows Server 2022 Standard	VDYBN-27WPP-V4HQT-9VMD4-VMK7H
+To install a public GVLK key on a computer or server, you need to run the command (where xxxx is the GVLK key from the table above, depending on the Windows edition):
+
+slmgr /ipk xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+You can manually specify the address and port of the KMS server on which you want to activate your Windows:
+
+slmgr /skms corp-kms1.woshub.com:1688
+To activate your Windows instance on a KMS server:
+
+slmgr /ato
+To check Windows activation status:
+slmgr /dlv
+
+If you want to activate a previously installed evaluation version of Windows Server 2022 on your KMS server, you first have to convert your Windows Server EVAL edition to the full version according to the guide.

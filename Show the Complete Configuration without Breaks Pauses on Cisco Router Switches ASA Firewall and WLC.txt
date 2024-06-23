@@ -1,0 +1,59 @@
+https://community.cisco.com/t5/networking-knowledge-base/show-the-complete-configuration-without-breaks-pauses-on-cisco/ta-p/3115114
+
+
+However if u like to have freedom to choose, to execute show run without more you can use this method.
+
+ 
+
+1. Type "terminal length 0" in privileged mode to set your terminal to display without any breaks.
+
+2. Type "show run" or "show start" to show the applicable config. The config will display without any breaks or pauses.
+
+ 
+
+To display the config without lengthy certificate data, use "show run brief ".
+
+ 
+
+This is useful for capturing the complete config for documentation purposes, especially if you do not have access via TFTP or the like.
+
+On a Cisco Wireless LAN Controller:
+ 
+
+1. Type "config paging disable" in priviledged mode to set your terminal to display without any breaks.
+
+ 
+
+2. Type "show run-config" to display the config.
+
+ 
+
+On a Cisco ASA Firewall:
+ 
+
+To change terminal line display there are two commands you can use:
+
+ 
+
+1) pager : Sets the number of lines to display in a Telnet session before the "---more---" prompt. This command is saved to the configuration.
+
+ 
+
+2) terminal pager:Sets the number of lines to display in a Telnet session before the "---more---" prompt. This command is not saved to the configuration.
+
+ 
+
+The default is 24 lines; 0 means no page limit.
+
+ 
+
+1. Type "pager 0" in priviledged mode to set your terminal to display without any breaks.
+
+ 
+
+2. Type "show run-config" to display the config.
+
+ 
+
+3. Type "pager 20" in priviledged mode to set your terminal to display with breaks every 20 lines.
+

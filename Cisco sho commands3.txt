@@ -1,0 +1,236 @@
+terminal pager 0 - for ASA
+terminal length 0  - Switches
+config paging disable   - for WLC
+sho int description
+sho int trunk
+sho vlan
+sho int status
+sho int sum
+show int description | include to
+switchport access vlan 10
+sho run int g3/4
+interface range G0/1 – 20
+interface range G0/1 – 4 , G0/10 – 15
+show mac-address-table | include 
+sho module
+show redundancy 
+sho bootvar
+redundancy force-switchover 
+
+ switchport access vlan 10
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 
+ switchport mode trunk
+
+g3/12 is where servers vhost1 nic is located
+
+
+
+Gi3/1       on               802.1q         trunking      10
+Gi3/2       on               802.1q         trunking      10
+Gi3/3       on               802.1q         trunking      10
+Gi3/10      on               802.1q         trunking      10
+Gi3/12      on               802.1q         trunking      10
+Gi3/17      on               802.1q         trunking      10
+Gi3/35      on               802.1q         trunking      10
+Gi4/4       on               802.1q         trunking      10
+Gi4/5       on               802.1q         trunking      10
+Gi4/6       on               802.1q         trunking      10
+Gi5/6       on               802.1q         trunking      10
+Gi7/21      on               802.1q         trunking      10
+Gi7/33      on               802.1q         trunking      10
+
+NOt connect ports
+
+CoreSwitch#  sho int status | include notconnect
+Gi1/1                        notconnect   10           full   1000 1000BaseLH
+Gi2/1                        notconnect   10           full   1000 1000BaseLH
+Gi3/3     Trunk to eustnbkfl notconnect   10           auto   auto 10/100/1000-TX
+Gi3/4                        notconnect   10           auto   auto 10/100/1000-TX
+Gi3/5     connected to DRAC  notconnect   80           auto   auto 10/100/1000-TX
+Gi3/6                        notconnect   10           auto   auto 10/100/1000-TX
+Gi3/7                        notconnect   10           auto   auto 10/100/1000-TX
+Gi3/8                        notconnect   10           auto   auto 10/100/1000-TX
+Gi3/9                        notconnect   10           auto   auto 10/100/1000-TX
+Gi3/11                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/13                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/14                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/16                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/18                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/20                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/22                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/24    connected to lapto notconnect   10           auto   auto 10/100/1000-TX
+Gi3/26                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/28                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/30    conntected to UCS  notconnect   10           auto   auto 10/100/1000-TX
+Gi3/31                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/32                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/36                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/38                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/40                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/42    connected to vost0 notconnect   10           auto   auto 10/100/1000-TX
+Gi3/43                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/44                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/45                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/46                       notconnect   10           auto   auto 10/100/1000-TX
+Gi3/47    connected to VHOST notconnect   10           auto   auto 10/100/1000-TX
+Gi4/1                        notconnect   10           full   1000 No Gbic
+Gi4/2                        notconnect   10           full   1000 1000BaseSX
+Gi4/3                        notconnect   10           full   1000 1000BaseLH
+Gi4/4     connected to netge notconnect   10           full   1000 1000BaseSX
+Gi4/5                        notconnect   10           full   1000 1000BaseLH
+Gi4/6                        notconnect   10           full   1000 No Gbic
+Gi5/2     connected to freen notconnect   70           auto   auto 10/100/1000-TX
+Gi5/3     connectted to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/4     connected to VHOST notconnect   10           auto   auto 10/100/1000-TX
+Gi5/7     conntected to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/8     conntected to hype notconnect   10           auto   auto 10/100/1000-TX
+Gi5/9     conntected to hype notconnect   10           auto   auto 10/100/1000-TX
+Gi5/11                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/12                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/13                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/14                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/15                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/16                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/17    connection to dire notconnect   10           auto   auto 10/100/1000-TX
+Gi5/18                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/19                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/20                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/21                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/22                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/23                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/24                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/25                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/26                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/27                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/29                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/30                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/31    connection to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/32                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/33    Connection to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/34    Connection to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/35    Connection to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/36    Connection to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi5/37                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/38                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/39                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/40                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/42                       notconnect   10           auto   auto 10/100/1000-TX
+Gi5/44                       notconnect   10           auto   auto 10/100/1000-TX
+Gi6/1                        notconnect   10           full   1000 No Gbic
+Gi6/2                        notconnect   10           full   1000 No Gbic
+Gi6/3                        notconnect   10           full   1000 No Gbic
+Gi6/4                        notconnect   10           full   1000 No Gbic
+Gi6/5     connected to vhost notconnect   10           full   1000 1000BaseLH
+Gi6/6     conntected to myuc notconnect   5            full   1000 1000BaseLH
+Gi7/1                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/2                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/3                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/4                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/5                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/6                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/7                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/8                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/9                        notconnect   10           auto   auto 10/100/1000-TX
+Gi7/10                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/11                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/12                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/13                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/14                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/15                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/16                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/17                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/18                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/19                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/20                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/22                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/23    connected to vhost notconnect   10           auto   auto 10/100/1000-TX
+Gi7/24                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/25                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/26                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/27                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/28                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/29                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/30                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/31                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/32                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/33    connected to VHOST notconnect   10           auto   auto 10/100/1000-TX
+Gi7/34    conntected to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi7/35    conntected to VHOS notconnect   10           auto   auto 10/100/1000-TX
+Gi7/36    connected to VHOST notconnect   10           auto   auto 10/100/1000-TX
+Gi7/37                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/38                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/39                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/40                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/41                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/42                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/43                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/44                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/45                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/46                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/47                       notconnect   10           auto   auto 10/100/1000-TX
+Gi7/48                       notconnect   10           auto   auto 10/100/1000-TX
+
+
+Ports with desc on them
+CoreSwitch#  sho int desc | include to
+Interface                      Status         Protocol Description
+Gi1/2                          up             up       connected to g0/3 aruba 3600 master
+Gi2/2                          up             up       connected to g0/2 aruba 3600
+Gi3/1                          up             up       conntected to garage wallplate port D2 QNAP access to VLAN 70
+Gi3/2                          up             up       connected to  asa router port g1/2
+Gi3/3                          down           down     Trunk to eustnbkflowers1 for vm support
+Gi3/5                          down           down     connected to DRAC on VHOST0
+Gi3/10                         up             up       connected to VHOST2 DRAC
+Gi3/12                         up             up       connected to vhost0  nic 1 management only no vswitch attached #35
+Gi3/15                         up             up       connected to port GE1/1 aruba 3200 controller
+Gi3/17                         up             up       conntected to port 8 on cisco 8 port unmanaged switch use for ESXi HOSTS
+Gi3/19                         up             up       connected to g/48 3560X POE switch
+Gi3/21                         up             up       connected to vhost0  nic 4 servers virtual adapter
+Gi3/23                         up             up       connected to garage WP D3 to house WP D3 to cisco 3560 POE 24 port swicth port 24
+Gi3/24                         down           down     connected to laptop
+Gi3/25                         up             up       connected to gigwireless switch port 24
+Gi3/27                         up             up       conntected to r510 port2
+Gi3/29                         up             up       connected to HPZ420 VHOST1
+Gi3/30                         down           down     conntected to UCS Controller management
+Gi3/33                         up             up       conntected to XBOX in garage
+Gi3/35                         up             up       connected to VHOST nic 1 management
+Gi3/37                         up             up       connected to port GE1/0 aruba 3200 controller
+Gi3/39                         up             up       connected to g0/0 voice router
+Gi3/41                         up             up       connected to vhost0 port 1 management
+Gi3/42                         down           down     connected to vost0 port 2 vm switch named servers
+Gi3/47                         down           down     connected to VHOST4 DRAC
+Gi3/48                         up             up       conntected to asa5550 management
+Gi4/4                          down           down     connected to netgear port 23F to port fa0/12 on 12 port 2950
+Gi5/1                          up             up       connected to vhost3 nic3 vswitch servers
+Gi5/2                          down           down     connected to freenas1 orginal 2950 nic1
+Gi5/3                          down           down     connectted to VHOST1 broadcom NIC ISCSI Virtual ethernet adapter
+Gi5/4                          down           down     connected to VHOST2 Workstations virtual adapter broadcom #47
+Gi5/5                          up             up       connected to VHOST3 nic2 management vlan 80
+Gi5/6                          up             up       connected to storage nic 1 management
+Gi5/7                          down           down     conntected to VHOST2 ISCSI virtual adapter broadcom #48
+Gi5/8                          down           down     conntected to hyper vhosts p1 to 4 vhost p5 to 8 vhost2 p9 to vhost3 p10 to vhost5
+Gi5/9                          down           down     conntected to hyper vhosts p1 to 4 vhost p5 to 8 vhost2 p9 to vhost3 p10 to vhost5
+Gi5/10                         up             up       conntected to hyper vhosts p1 to 4 vhost p5 to 8 vhost2 p9 to vhost3 p10 to vhost5
+Gi5/17                         down           down     connection to directv nomad geniego box
+Gi5/31                         down           down     connection to VHOST6 DRAC
+Gi5/33                         down           down     Connection to VHOST6 VNIC 4 intel server adapter 1 workstations
+Gi5/34                         down           down     Connection to VHOST6 VNIC 3  broadcom 48 servers
+Gi5/35                         down           down     Connection to VHOST6 VNIC 5 intel server adapter 2 ISCSI
+Gi5/36                         down           down     Connection to VHOST6 VNIC 3  broadcom 50 management
+Gi5/41                         up             up       connected to r519 drac
+Gi5/43                         up             up       connected to r510 port g1
+Gi5/45                         up             up       conntected to vhost broadcom nic 3 yellow cable for the vswitch servers VMs
+Gi5/46                         up             up       connected to port 1 on vhost3 for drac
+Gi5/47                         up             up       connected to g0/3 asa5550
+Gi5/48                         up             up       connected to g1/3 asa 5550
+Gi6/5                          down           down     connected to vhost3 nic1 management vlan 80
+Gi6/6                          down           down     conntected to myucs 6120 port 4
+Gi7/21                         up             up       connected to vhost nic1
+Gi7/23                         down           down     connected to vhost
+Gi7/33                         down           down     connected to VHOST nic 3 vswitch
+Gi7/34                         down           down     conntected to VHOST4 right broadcom NIC
+Gi7/35                         down           down     conntected to VHOST4 left port on dual NIC
+Gi7/36                         down           down     connected to VHOST4 right  port on dual NIC
+
+

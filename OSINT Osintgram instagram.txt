@@ -1,0 +1,20 @@
+Download Osintgram
+
+git clone https://github.com/Datalux/Osintgram.git
+Make sure you have Python 3.6+ and pip3 Installed
+
+sudo apt install python3
+sudo apt install python3-pip
+Install requirements (make sure you are in the Osintgram directory)
+
+pip3 install -r requirements.txt
+Create Login Info
+
+mkdir config
+cd config
+echo "username" > username.conf
+echo "password" > pw.conf
+echo "{}" > settings.json
+Start Hacking (make sure you are back in the Osintgram directory)
+
+python3 main.py instagram_target

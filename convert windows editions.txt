@@ -1,0 +1,25 @@
+https://docs.microsoft.com/en-us/windows-server/get-started/upgrade-conversion-options
+
+Converting Windows Server Standard edition to Datacenter edition
+At any time after installing Windows Server, you can convert Windows Server Standard edition to Datacenter edition. You can also run setup.exe from the installation media to upgrade or repair the installation (sometimes called in-place repair). If you run setup.exe to upgrade or repair in-place on any edition of Windows Server, the result will be the same edition you started with.
+
+You can convert the Standard edition of Windows Server to the Datacenter edition as follows:
+
+Determine that Windows Server Standard is the current edition name by running the command below. The output is an abbreviated form of the edition name, for example Windows Server Standard edition is ServerStandard:
+
+
+Copy
+DISM /online /Get-CurrentEdition
+Verify that Windows Server Datacenter is a valid option to convert to by running the following command:
+
+
+Copy
+DISM /online /Get-TargetEditions
+Enter ServerDatacenter and your retail product key in the command below:
+
+
+Copy
+DISM /online /Set-Edition:ServerDatacenter /ProductKey:38GN7-RFGPG-V79F6-937F2-4RKB7 /accepteula
+
+That is my server 22 dc key
+

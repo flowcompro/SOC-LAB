@@ -1,0 +1,8 @@
+https://docs.observium.org/install_debian/
+
+sudo apt install wget
+sudo apt install curl
+sudo apt install net-tools
+wget http://www.observium.org/observium_installscript.sh
+sudo chmod +x observium_installscript.sh
+sudo ./observium_installscript.sh

@@ -1,0 +1,9 @@
+Elevated command prompt, run gpedit.msc
+
+Navigate to Computer Configuration->Windows Settings->Security Settings->Local Policies->Security Options
+
+Enable "User Account Control: Admin Approval Mode for the Built-in Administrator account"
+
+Reboot and try again.
+
+Not sure exactly why, but this fixes the issue for me.

@@ -1,0 +1,99 @@
+https://linuxhint.com/send_linux_logs_remote_server/
+
+How I did it to send logs to a syslog host.  I only did the client , no need to do the server unless i am making the ubuntu the server
+
+Run the command shown in the following image on the client device:
+
+sudo nano /etc/rsyslog.conf
+
+Within this file, we need to add a line with the following syntax:
+
+*.* @@<Server-IP-Address>:<Port>
+
+real example
+*.* @@192.168.1.22:514
+
+sudo service rsyslog restart
+
+sudo ufw allow 514/tcp
+sudo ufw allow 514/udp
+
+
+
+
+Real instructions are below
+
+How To Send Linux Logs to a Remote Server
+
+
+This is to setup of a syslog server
+To check if rsyslog is installed in your system and its status, execute the command shown in the following screenshot:
+
+sudo service rsyslog status
+If rsyslog isn’t active, you can start it by running the following command:
+
+sudo service rsyslog start
+
+You also can start rsyslog by running the following command:
+
+Note: For additional information on managing Debian/Ubuntu services, read Stop, start, and restart services on Debian.
+
+sudo systemctl start rsyslog
+
+
+SERVER CONFIG
+
+sudo nano /etc/rsyslog.conf
+
+put the following entry 
+
+$template RemoteLogs,”/var/log/%HOSTNAME%/RemoteLog.log”
+
+*.* ?RemoteLogs
+
+& ~
+
+Scroll down the file and uncomment the following lines by removing the number sign (#) at the beginning of each line:
+
+Module(load="imudp")
+
+input(type="imudp" port="514")
+Also, uncomment the following:
+
+module(load=”imtcp”)
+
+input(type=”imtcp” port=”514”)
+
+To open the port 514 for the TCP and UDP protocol, run the command shown in the following image:
+
+sudo ufw allow 514/tcp
+sudo ufw allow 514/udp
+
+
+sudo service rsyslog restart
+
+
+That is it.
+
+
+For the client
+
+Run the command shown in the following image on the client device:
+
+sudo nano /etc/rsyslog.conf
+
+Within this file, we need to add a line with the following syntax:
+
+*.* @@<Server-IP-Address>:<Port>
+
+real example
+*.* @@192.168.1.22:514
+
+sudo ufw allow 514/tcp
+sudo ufw allow 514/udp
+
+
+
+
+
+
