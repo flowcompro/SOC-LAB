@@ -1,0 +1,49 @@
+import paramiko
+import getpass
+
+def get_asa_shunned_devices(hostname, username, password):
+    try:
+        # Create an SSH client
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        
+        # Connect to the ASA
+        print(f"Connecting to {hostname}...")
+        client.connect(hostname, username=username, password=password)
+        print("Connected.")
+        
+        # Open a shell session
+        ssh_shell = client.invoke_shell()
+        
+        # Send the 'enable' command and provide the enable password if required
+        ssh_shell.send("enable\n")
+        ssh_shell.send(password + "\n")
+        
+        # Send the 'show shun' command
+        ssh_shell.send("show shun\n")
+        
+        # Allow some time for the command to execute and capture the output
+        ssh_shell.settimeout(2)
+        output = ""
+        while True:
+            try:
+                data = ssh_shell.recv(1024).decode('utf-8')
+                output += data
+            except paramiko.ssh_exception.SSHException:
+                break
+        
+        # Print the output
+        print(output)
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        client.close()
+
+if __name__ == "__main__":
+    # Prompt for credentials
+    hostname = input("Enter the ASA hostname or IP address: ")
+    username = input("Enter your username: ")
+    password = getpass.getpass("Enter your password: ")
+    
+    get_asa_shunned_devices(hostname, username, password)
