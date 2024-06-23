@@ -1,0 +1,124 @@
+Contoso01Labs Active Directory Configuration
+1. Domain Controller Configuration
+ 
+    Domain Name: contoso01labs.local
+    NetBIOS Name: CONTOSO01labs
+    Forest Functional Level: Windows Server 2016
+    Domain Functional Level: Windows Server 2016
+
+2. Servers
+
+    Domain Controller (PDC): DC
+    Additional Domain Controller: DC1
+    File Server: FS
+    Application Server: APP
+    Web Server: WEB
+
+3. Organizational Units (OUs)
+
+    Contoso01Labs
+        Users
+            Admin Users
+            Standard Users
+            Service Accounts
+        Computers
+            Workstations
+            Servers
+        Groups
+            Admin Groups
+            Standard Groups
+        Policies
+            GPOs
+
+4. Users and Groups
+
+    Administrative Users:
+        Admin User: contosolabs\admin01
+        Password Policy: Complex passwords, minimum length 12 characters, changed every 90 days.
+
+    Standard Users:
+        User accounts will follow the format first.last@contoso01labs.local
+        Password Policy: Complex passwords, minimum length 8 characters, changed every 90 days.
+
+    Groups:
+        Admin Groups: Domain Admins, Enterprise Admins, Server Admins, Workstation Admins
+        Standard Groups: HR, IT, Sales, Marketing
+
+5. Service Accounts
+
+    Naming Convention: svc_{service}
+        Example: svc_backup, svc_sql
+
+    Account Policies:
+        Passwords never expire
+        Cannot change password
+        Minimal privileges necessary
+
+6. Group Policy Objects (GPOs)
+
+    Default Domain Policy:
+        Enforce password history: 24 passwords remembered
+        Maximum password age: 90 days
+        Minimum password age: 1 day
+        Minimum password length: 8 characters
+        Password must meet complexity requirements: Enabled
+        Account lockout threshold: 5 invalid logon attempts
+        Account lockout duration: 15 minutes
+        Reset account lockout counter after: 15 minutes
+
+    Admin Users Policy (linked to Admin Users OU):
+        User Rights Assignment:
+            Allow log on locally: Administrators
+            Deny log on locally: Guests
+            Allow log on through Remote Desktop Services: Administrators
+        Security Options:
+            Accounts: Administrator account status: Enabled
+            Accounts: Guest account status: Disabled
+            Interactive logon: Do not display last user name: Enabled
+
+    Workstation Policy (linked to Workstations OU):
+        Windows Components:
+            Windows Update: Auto download and schedule the install
+            Windows Defender Antivirus: Enabled
+        Administrative Templates:
+            Control Panel: Prohibit access to Control Panel and PC settings: Enabled
+            System: Allow users to connect remotely using Remote Desktop Services: Disabled
+
+    Server Policy (linked to Servers OU):
+        User Rights Assignment:
+            Allow log on through Remote Desktop Services: Administrators, Server Admins
+        Security Options:
+            Network security: LAN Manager authentication level: Send NTLMv2 response only. Refuse LM & NTLM
+
+7. Additional Configuration
+
+    DNS Configuration:
+        Primary DNS Server: DC
+        Secondary DNS Server: DC1
+
+    DHCP Configuration:
+        Scope DMZ: 192.168.0.100 - 192.168.0.200
+        Lease Duration: 8 days
+        Reservations: Critical servers and devices
+        Scope Workstations
+        Scope IOT
+        Scope Family
+        Scope XBOXTV
+        Scope TEMPMONITORS
+        Scope Cameras
+        Scope Alarms
+
+    File Server Configuration (FS01):
+        Shares:
+            Public: \FS\Public (Everyone: Read)
+            Department Shares: \FS\Dept (Department-specific permissions)
+        Quotas: Implement quotas for department shares (e.g., 50 GB per department)
+
+    Backup Configuration:
+        Backup Server: BKP01
+        Backup Schedule: Daily incremental, weekly full
+        Backup Software: Windows Server Backup
+
+Summary
+
+This configuration covers the initial setup of the Contoso01Labs Active Directory environment, including domain controllers, OUs, user and group policies, service accounts, and additional server configurations. This setup ensures a secure and organized AD infrastructure suitable for a small to medium-sized enterprise.
