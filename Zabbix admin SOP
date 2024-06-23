@@ -1,0 +1,127 @@
+Standard Operating Procedure (SOP) for Daily, Weekly, and Monthly Zabbix Tasks
+Version: 1.0
+
+1. Purpose
+
+The purpose of this SOP is to establish routine tasks and procedures for maintaining and using the Zabbix monitoring system on a daily, weekly, and monthly basis. This ensures the system operates effectively and issues are promptly addressed.
+2. Scope
+
+This SOP applies to all IT staff responsible for monitoring and maintaining the organization's IT infrastructure using Zabbix.
+3. Responsibilities
+
+    IT Administrator: Ensures the SOP is followed and tasks are completed.
+    System Administrators: Execute daily, weekly, and monthly tasks as outlined.
+    Network Administrators: Assist with tasks that involve network-related monitoring.
+    IT Support Staff: Respond to alerts and perform corrective actions as needed.
+
+4. Daily Tasks
+4.1 Check Zabbix Server Status
+
+    Log in to the Zabbix server.
+
+    Run the following command to check the status:
+
+    sudo systemctl status zabbix-server
+
+    Ensure the server is running without errors.
+
+4.2 Review Dashboard
+
+    Log in to the Zabbix web interface.
+    Check the dashboard for any critical issues or alerts.
+    Investigate and resolve any high-severity issues immediately.
+
+4.3 Monitor System Performance
+
+    Go to "Monitoring" -> "Latest data".
+    Review the performance metrics of critical systems.
+    Ensure no system is showing signs of performance degradation or failure.
+
+4.4 Check Event Logs
+
+    Navigate to "Monitoring" -> "Events".
+    Review recent events and alerts.
+    Document any recurring issues and investigate their root cause.
+
+5. Weekly Tasks
+5.1 Review and Update Hosts
+
+    Navigate to "Configuration" -> "Hosts".
+    Ensure all critical hosts are being monitored.
+    Add or remove hosts as needed based on infrastructure changes.
+
+5.2 Validate Triggers and Alerts
+
+    Go to "Configuration" -> "Triggers".
+    Review trigger conditions and ensure they are still relevant.
+    Update or disable triggers that are no longer applicable.
+
+5.3 Backup Zabbix Configuration
+
+    Perform a backup of the Zabbix configuration database:
+
+    mysqldump -u zabbix -p zabbix > /path/to/backup/zabbix_$(date +%F).sql
+
+    Store the backup securely.
+
+5.4 Review User Activity
+
+    Navigate to "Administration" -> "Audit".
+    Review the actions performed by users.
+    Ensure there are no unauthorized changes or suspicious activities.
+
+6. Monthly Tasks
+6.1 System Health Check
+
+    Perform a comprehensive health check of the Zabbix server.
+    Ensure the server has sufficient resources (CPU, memory, disk space).
+    Address any resource bottlenecks.
+
+6.2 Review and Update Templates
+
+    Navigate to "Configuration" -> "Templates".
+    Ensure all templates are up-to-date and relevant.
+    Modify templates to reflect any changes in monitoring requirements.
+
+6.3 Test Alerting Mechanisms
+
+    Verify that email, SMS, and other notification methods are functioning correctly.
+    Perform test alerts to confirm proper configuration.
+
+6.4 Performance Tuning
+
+    Analyze the performance of the Zabbix server and database.
+    Optimize configurations as needed to ensure efficient operation.
+    Review and adjust the housekeeping settings to manage historical data efficiently.
+
+6.5 Update Zabbix Software
+
+    Check for new releases or patches for Zabbix.
+    Plan and perform updates in a maintenance window to minimize impact.
+    Follow Zabbix's official documentation for the update process.
+
+7. Documentation and Reporting
+7.1 Daily Reports
+
+    Document any critical issues or incidents.
+    Maintain a log of actions taken to resolve issues.
+
+7.2 Weekly Reports
+
+    Summarize weekly activities, including any significant changes or updates.
+    Highlight recurring issues and potential improvements.
+
+7.3 Monthly Reports
+
+    Provide a detailed report on the overall health and performance of the monitoring system.
+    Include recommendations for improvements or necessary changes.
+
+8. Review and Update
+
+This SOP should be reviewed annually and updated as necessary to ensure it reflects current practices and changes in the Zabbix monitoring environment.
+
+Approved by:
+
+Date:
+
+This SOP establishes a consistent approach to maintaining and using Zabbix, ensuring that monitoring tasks are performed regularly and issues are addressed promptly, thereby maintaining the integrity and efficiency of the IT infrastructure.
