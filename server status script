@@ -1,0 +1,156 @@
+# Define the path to the file containing the list of servers
+$serverListPath = "C:\Users\god\Downloads\Scripts\server status\serverlist.txt"
+# Define the path to the directory where logs will be stored
+$logDirectory = "C:\Users\god\Downloads\Scripts\server status\logs"
+
+# Create the log directory if it doesn't exist
+if (-not (Test-Path -Path $logDirectory)) {
+    New-Item -ItemType Directory -Path $logDirectory
+}
+
+# Function to clean up old log files
+function Cleanup-OldLogs {
+    $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt" | Sort-Object LastWriteTime -Descending
+    if ($logFiles.Count -gt 12) {
+        $filesToDelete = $logFiles | Select-Object -Skip 12
+        foreach ($file in $filesToDelete) {
+            Remove-Item -Path $file.FullName
+        }
+    }
+}
+
+# Function to get the current timestamp
+function Get-Timestamp {
+    return (Get-Date).ToString("yyyyMMdd_HHmmss")
+}
+
+# Define function to check services
+function Check-Services {
+    param (
+        [string]$server
+    )
+    $serviceStatus = Get-WmiObject -ComputerName $server -Class Win32_Service | Where-Object { $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" }
+    $serviceStatus
+}
+
+# Define function to check CPU usage
+function Get-CPUUsage {
+    param (
+        [string]$server
+    )
+    $cpuLoad = Get-WmiObject -ComputerName $server -Class Win32_Processor | Measure-Object -Property LoadPercentage -Average | Select-Object -ExpandProperty Average
+    $cpuLoad
+}
+
+# Define function to check memory usage
+function Get-MemoryUsage {
+    param (
+        [string]$server
+    )
+    $memoryStatus = Get-WmiObject -ComputerName $server -Class Win32_OperatingSystem
+    $totalMemory = $memoryStatus.TotalVisibleMemorySize
+    $freeMemory = $memoryStatus.FreePhysicalMemory
+    $usedMemory = $totalMemory - $freeMemory
+    $memoryUsagePercent = [math]::round(($usedMemory / $totalMemory) * 100, 2)
+    $memoryUsagePercent
+}
+
+# Define function to check drive sizes
+function Get-DriveSizes {
+    param (
+        [string]$server
+    )
+    $driveSizes = Get-WmiObject -ComputerName $server -Class Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID!='D:'" | Select-Object DeviceID, Size, FreeSpace
+    $driveSizes
+}
+
+# Function to display output in red
+function Write-OutputRed {
+    param (
+        [string]$message
+    )
+    Write-Host $message -ForegroundColor Red
+    return $message
+}
+
+# Function to display output for a server
+function Display-ServerStatus {
+    param (
+        [string]$server
+    )
+    $output = "Checking server: $server" + "`n"
+    Write-Host "Checking server: $server" -ForegroundColor Yellow
+
+    # Check services
+    $servicesOutput = @()
+    $servicesNotRunning = Check-Services -server $server
+    if ($servicesNotRunning) {
+        foreach ($service in $servicesNotRunning) {
+            $message = "Service '$($service.Name)' is set to Automatic but not running"
+            $servicesOutput += $message
+            Write-OutputRed $message
+        }
+    } else {
+        $message = "All automatic services are running"
+        $servicesOutput += $message
+        Write-Host $message -ForegroundColor Green
+    }
+    $output += $servicesOutput -join "`n" + "`n"
+
+    # Check CPU usage
+    $cpuUsage = Get-CPUUsage -server $server
+    if ($cpuUsage -gt 90) {
+        $message = Write-OutputRed "CPU Usage: ${cpuUsage}%"
+    } else {
+        $message = "CPU Usage: ${cpuUsage}%"
+        Write-Host $message
+    }
+    $output += $message + "`n"
+
+    # Check memory usage
+    $memoryUsage = Get-MemoryUsage -server $server
+    if ($memoryUsage -gt 90) {
+        $message = Write-OutputRed "Memory Usage: ${memoryUsage}%"
+    } else {
+        $message = "Memory Usage: ${memoryUsage}%"
+        Write-Host $message
+    }
+    $output += $message + "`n"
+
+    # Check drive sizes
+    $driveSizes = Get-DriveSizes -server $server
+    foreach ($drive in $driveSizes) {
+        $freeSpacePercent = [math]::round(($drive.FreeSpace / $drive.Size) * 100, 2)
+        if ($freeSpacePercent -lt 10) {
+            $message = "Drive $($drive.DeviceID) has less than 10% free space ($freeSpacePercent%)"
+            $message = Write-OutputRed $message
+        } else {
+            $message = "Drive $($drive.DeviceID) has $freeSpacePercent% free space"
+            Write-Host $message
+        }
+        $output += $message + "`n"
+    }
+
+    $output += "`n"
+    return $output
+}
+
+# Monitor servers continuously
+while ($true) {
+    Clear-Host
+    $servers = Get-Content -Path $serverListPath
+    foreach ($server in $servers) {
+        $output = Display-ServerStatus -server $server
+        Write-Host $output
+
+        # Write the log content to the file
+        $timestamp = Get-Timestamp
+        $logFilePath = "$logDirectory\serverstats_${server}_$timestamp.txt"
+        Set-Content -Path $logFilePath -Value $output
+    }
+
+    # Clean up old log files
+    Cleanup-OldLogs
+
+    Start-Sleep -Seconds 7200 # Wait for 2 hours
+}
