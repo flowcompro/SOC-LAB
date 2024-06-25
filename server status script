@@ -3,10 +3,10 @@ $serverListPath = "C:\Users\god\Downloads\Scripts\server status\serverlist.txt"
 # Define the path to the directory where logs will be stored
 $logDirectory = "C:\Users\god\Downloads\Scripts\server status\logs"
 # Define the network path to move logs
-$networkLogPath = "\\fs\shares\Logs\serverstatus"
+$networkLogPath = "\\fs\share1\logs\serverstatus"
 # Define the interval to move logs (3 million seconds)
-$logMoveInterval = 120
-# Define the interval for checking servers (2 hours)
+$logMoveInterval = 3000000
+# Define the interval for checking servers (60 seconds)
 $checkInterval = 60
 
 # Create the log directory if it doesn't exist
@@ -44,7 +44,10 @@ function Check-Services {
         [string]$server
     )
     $services = Get-WmiObject -ComputerName $server -Class Win32_Service |
-    Where-Object { $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" -and $_.Name -notin @("RemoteRegistry", "TrustedInstaller") }
+    Where-Object {
+        $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" -and
+        $_.Name -notin @("RemoteRegistry", "TrustedInstaller", "GoogleUpdaterInternalService128.0.6537.0", "GoogleUpdaterService128.0.6537.0")
+    }
     
     $serviceMessages = @()
 
