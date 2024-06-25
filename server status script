@@ -11,8 +11,8 @@ if (-not (Test-Path -Path $logDirectory)) {
 # Function to clean up old log files
 function Cleanup-OldLogs {
     $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt" | Sort-Object LastWriteTime -Descending
-    if ($logFiles.Count -gt 12) {
-        $filesToDelete = $logFiles | Select-Object -Skip 12
+    if ($logFiles.Count -gt 300) {
+        $filesToDelete = $logFiles | Select-Object -Skip 300
         foreach ($file in $filesToDelete) {
             Remove-Item -Path $file.FullName
         }
@@ -24,13 +24,24 @@ function Get-Timestamp {
     return (Get-Date).ToString("yyyyMMdd_HHmmss")
 }
 
-# Define function to check services
+# Define function to check services and start if not running
 function Check-Services {
     param (
         [string]$server
     )
-    $serviceStatus = Get-WmiObject -ComputerName $server -Class Win32_Service | Where-Object { $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" }
-    $serviceStatus
+    $services = Get-WmiObject -ComputerName $server -Class Win32_Service |
+    Where-Object { $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" -and $_.Name -notin @("RemoteRegistry", "TrustedInstaller") }
+    
+    $serviceMessages = @()
+
+    foreach ($service in $services) {
+        $serviceName = $service.Name
+        $serviceController = Get-Service -ComputerName $server -Name $serviceName
+        Start-Service -InputObject $serviceController
+        $serviceMessages += "Service '$serviceName' was not running and has been started"
+    }
+
+    return $serviceMessages
 }
 
 # Define function to check CPU usage
@@ -38,8 +49,7 @@ function Get-CPUUsage {
     param (
         [string]$server
     )
-    $cpuLoad = Get-WmiObject -ComputerName $server -Class Win32_Processor | Measure-Object -Property LoadPercentage -Average | Select-Object -ExpandProperty Average
-    $cpuLoad
+    Get-WmiObject -ComputerName $server -Class Win32_Processor | Measure-Object -Property LoadPercentage -Average | Select-Object -ExpandProperty Average
 }
 
 # Define function to check memory usage
@@ -51,8 +61,7 @@ function Get-MemoryUsage {
     $totalMemory = $memoryStatus.TotalVisibleMemorySize
     $freeMemory = $memoryStatus.FreePhysicalMemory
     $usedMemory = $totalMemory - $freeMemory
-    $memoryUsagePercent = [math]::round(($usedMemory / $totalMemory) * 100, 2)
-    $memoryUsagePercent
+    [math]::round(($usedMemory / $totalMemory) * 100, 2)
 }
 
 # Define function to check drive sizes
@@ -60,17 +69,7 @@ function Get-DriveSizes {
     param (
         [string]$server
     )
-    $driveSizes = Get-WmiObject -ComputerName $server -Class Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID!='D:'" | Select-Object DeviceID, Size, FreeSpace
-    $driveSizes
-}
-
-# Function to display output in red
-function Write-OutputRed {
-    param (
-        [string]$message
-    )
-    Write-Host $message -ForegroundColor Red
-    return $message
+    Get-WmiObject -ComputerName $server -Class Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID!='D:'" | Select-Object DeviceID, Size, FreeSpace
 }
 
 # Function to display output for a server
@@ -78,61 +77,53 @@ function Display-ServerStatus {
     param (
         [string]$server
     )
-    $output = "Checking server: $server" + "`n"
-    Write-Host "Checking server: $server" -ForegroundColor Yellow
+    $output = "Checking server: $server`n"
 
-    # Check services
+    # Check services and start if not running
     $servicesOutput = @()
-    $servicesNotRunning = Check-Services -server $server
-    if ($servicesNotRunning) {
-        foreach ($service in $servicesNotRunning) {
-            $message = "Service '$($service.Name)' is set to Automatic but not running"
+    $servicesNotRunningMessages = Check-Services -server $server
+    if ($servicesNotRunningMessages) {
+        foreach ($message in $servicesNotRunningMessages) {
             $servicesOutput += $message
-            Write-OutputRed $message
         }
     } else {
         $message = "All automatic services are running"
         $servicesOutput += $message
-        Write-Host $message -ForegroundColor Green
     }
-    $output += $servicesOutput -join "`n" + "`n"
+    $output += ($servicesOutput -join "`n") + "`n"
 
     # Check CPU usage
     $cpuUsage = Get-CPUUsage -server $server
-    if ($cpuUsage -gt 90) {
-        $message = Write-OutputRed "CPU Usage: ${cpuUsage}%"
-    } else {
-        $message = "CPU Usage: ${cpuUsage}%"
-        Write-Host $message
-    }
+    $message = "CPU Usage: ${cpuUsage}%"
     $output += $message + "`n"
 
     # Check memory usage
     $memoryUsage = Get-MemoryUsage -server $server
-    if ($memoryUsage -gt 90) {
-        $message = Write-OutputRed "Memory Usage: ${memoryUsage}%"
-    } else {
-        $message = "Memory Usage: ${memoryUsage}%"
-        Write-Host $message
-    }
+    $message = "Memory Usage: ${memoryUsage}%"
     $output += $message + "`n"
 
     # Check drive sizes
     $driveSizes = Get-DriveSizes -server $server
     foreach ($drive in $driveSizes) {
         $freeSpacePercent = [math]::round(($drive.FreeSpace / $drive.Size) * 100, 2)
-        if ($freeSpacePercent -lt 10) {
-            $message = "Drive $($drive.DeviceID) has less than 10% free space ($freeSpacePercent%)"
-            $message = Write-OutputRed $message
-        } else {
-            $message = "Drive $($drive.DeviceID) has $freeSpacePercent% free space"
-            Write-Host $message
-        }
+        $message = "Drive $($drive.DeviceID) has $freeSpacePercent% free space"
         $output += $message + "`n"
     }
 
     $output += "`n"
     return $output
+}
+
+# Function to display the countdown timer
+function Display-Countdown {
+    param (
+        [int]$seconds
+    )
+    for ($i = $seconds; $i -gt 0; $i--) {
+        Write-Host -NoNewline "`rTime left before next check: $i seconds"
+        Start-Sleep -Seconds 1
+    }
+    Write-Host ""
 }
 
 # Monitor servers continuously
@@ -141,16 +132,21 @@ while ($true) {
     $servers = Get-Content -Path $serverListPath
     foreach ($server in $servers) {
         $output = Display-ServerStatus -server $server
-        Write-Host $output
 
         # Write the log content to the file
         $timestamp = Get-Timestamp
         $logFilePath = "$logDirectory\serverstats_${server}_$timestamp.txt"
         Set-Content -Path $logFilePath -Value $output
+
+        # Display the output
+        Write-Host ""
+        Write-Host $output
+        Write-Host ""
     }
 
     # Clean up old log files
     Cleanup-OldLogs
 
-    Start-Sleep -Seconds 7200 # Wait for 2 hours
+    # Display the countdown timer
+    Display-Countdown -seconds 7200
 }
