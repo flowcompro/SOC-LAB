@@ -2,6 +2,12 @@
 $serverListPath = "C:\Users\god\Downloads\Scripts\server status\serverlist.txt"
 # Define the path to the directory where logs will be stored
 $logDirectory = "C:\Users\god\Downloads\Scripts\server status\logs"
+# Define the network path to move logs
+$networkLogPath = "\\fs\shares\Logs\serverstatus"
+# Define the interval to move logs (3 million seconds)
+$logMoveInterval = 120
+# Define the interval for checking servers (2 hours)
+$checkInterval = 60
 
 # Create the log directory if it doesn't exist
 if (-not (Test-Path -Path $logDirectory)) {
@@ -11,11 +17,19 @@ if (-not (Test-Path -Path $logDirectory)) {
 # Function to clean up old log files
 function Cleanup-OldLogs {
     $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt" | Sort-Object LastWriteTime -Descending
-    if ($logFiles.Count -gt 300) {
-        $filesToDelete = $logFiles | Select-Object -Skip 300
+    if ($logFiles.Count -gt 3000000) {
+        $filesToDelete = $logFiles | Select-Object -Skip 3000000
         foreach ($file in $filesToDelete) {
             Remove-Item -Path $file.FullName
         }
+    }
+}
+
+# Function to move log files to network path
+function Move-LogFiles {
+    $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt"
+    foreach ($file in $logFiles) {
+        Move-Item -Path $file.FullName -Destination $networkLogPath
     }
 }
 
@@ -126,6 +140,9 @@ function Display-Countdown {
     Write-Host ""
 }
 
+# Variable to track the last log move time
+$lastLogMoveTime = [datetime]::Now
+
 # Monitor servers continuously
 while ($true) {
     Clear-Host
@@ -147,6 +164,13 @@ while ($true) {
     # Clean up old log files
     Cleanup-OldLogs
 
+    # Check if it's time to move the log files
+    $currentTime = [datetime]::Now
+    if (($currentTime - $lastLogMoveTime).TotalSeconds -ge $logMoveInterval) {
+        Move-LogFiles
+        $lastLogMoveTime = $currentTime
+    }
+
     # Display the countdown timer
-    Display-Countdown -seconds 7200
+    Display-Countdown -seconds $checkInterval
 }
