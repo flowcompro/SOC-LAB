@@ -1,0 +1,76 @@
+**Endgame** is an endpoint detection and response (EDR) platform that provides advanced protection against various threats, including malware, ransomware, and advanced persistent threats (APTs). Endgame's platform is widely used in cybersecurity for threat hunting, detection, and incident response.
+
+Here’s a basic guide on how to use Endgame for endpoint detection and response:
+
+### 1. **Install and Configure Endgame**
+   - **Agent Deployment**: The first step is deploying the Endgame agent on the endpoints (desktops, laptops, servers) you want to monitor. This can be done manually or through automated software deployment tools, depending on your environment.
+   - **Policy Configuration**: After installing the agent, configure policies on the Endgame console to define what the agent should monitor and how it should respond to potential threats. You can set rules for malware detection, process monitoring, network traffic analysis, and more.
+
+### 2. **Access the Endgame Console**
+   Once you have the Endgame agent installed on endpoints, you’ll need to access the **Endgame Console**, which serves as the command center for managing endpoints, viewing alerts, and performing threat hunting and incident response.
+
+   - **Dashboard**: The console's dashboard provides an overview of the health of your network, including metrics like active threats, agents status, and current alerts.
+   - **Real-Time Alerts**: View real-time alerts on detected threats. Each alert provides detailed information about the nature of the threat, affected systems, and severity levels.
+
+### 3. **Threat Detection**
+   - **Automated Detection**: Endgame uses machine learning and behavioral analysis to automatically detect threats in real time. This includes the detection of known malware, zero-day exploits, and suspicious behaviors.
+   - **MITRE ATT&CK**: Endgame maps detections to the MITRE ATT&CK framework, which allows you to see how detected threats fit into known adversary tactics and techniques.
+   
+### 4. **Threat Hunting**
+   Endgame allows you to proactively hunt for threats using a query-based approach. Threat hunting can be done through **Endgame’s Artemis**, an agent command-line interface used to query endpoints for suspicious activity.
+
+   - **Search for Indicators of Compromise (IOCs)**: You can hunt for specific IOCs, such as malicious file hashes, IP addresses, or domain names, across your endpoints.
+   - **Behavioral Hunting**: Endgame provides predefined queries based on common attack techniques, or you can create custom queries using YARA rules or other formats to look for specific behaviors across your endpoints.
+   
+   Example of hunting for a file hash:
+   ```bash
+   hunt file.hash == "malicious-hash-value"
+   ```
+
+   Example of querying a process:
+   ```bash
+   hunt process.name == "suspicious-process.exe"
+   ```
+
+### 5. **Incident Response**
+   When a threat is detected, Endgame provides various incident response capabilities:
+   
+   - **Containment**: Isolate infected or compromised machines from the network to prevent further spread.
+   - **Remediation**: Automatically or manually remove malicious files or processes from affected endpoints.
+   - **Forensic Investigation**: Gather forensic data such as running processes, network connections, file system changes, and memory dumps to understand the scope of the attack and how it happened.
+
+### 6. **Machine Learning Models**
+   Endgame uses machine learning models for threat detection. These models are designed to detect anomalies, malicious patterns, and behaviors that are indicators of compromise. The models run directly on the endpoint, minimizing network traffic and latency.
+
+   - **Pre-Execution Detection**: Identifies threats before they execute on the system.
+   - **In-Execution Detection**: Monitors and stops threats while they are executing by analyzing behavior in real-time.
+   - **Post-Execution Analysis**: Analyzes system changes and file modifications to detect if a threat has compromised the system.
+
+### 7. **Integrations and API**
+   Endgame integrates with other security tools and systems, including SIEMs (Security Information and Event Management), orchestration platforms, and external threat intelligence feeds. You can use the API for custom integrations and to automate responses.
+
+   - **API Access**: Use the Endgame API to automate hunting, remediation, or reporting. You can script tasks like running queries across multiple endpoints or exporting data.
+
+### 8. **Response Actions**
+   Endgame offers a range of response actions you can perform directly from the console:
+   - **Quarantine**: Quarantine files or processes to stop their execution.
+   - **Terminate Process**: End malicious processes that are running on an endpoint.
+   - **Delete File**: Remove malware or suspicious files from the system.
+   - **Reboot Machine**: Trigger a system reboot if necessary to complete remediation actions.
+
+### 9. **Monitor and Analyze Data**
+   You can monitor your network’s security posture through the **Endgame Dashboard** and detailed **reports**:
+   - **Alerts**: View detailed information about each alert, including affected endpoints, threat level, and recommended actions.
+   - **Endpoint Status**: Check the status of all agents across your network. Ensure that they are up-to-date and properly configured.
+
+### 10. **Updates and Maintenance**
+   Keep the Endgame platform and its agents updated to ensure that the latest security patches, signatures, and machine learning models are in use. Endgame provides regular updates that help keep your environment secure.
+
+### Summary of Key Features in Endgame:
+- **Threat Detection**: Real-time detection using machine learning, behavioral analysis, and traditional signatures.
+- **Threat Hunting**: Proactive querying and searching for IOCs and suspicious behaviors.
+- **Incident Response**: Contain, remediate, and investigate threats with powerful response tools.
+- **Integration**: Connect with SIEMs, orchestration platforms, and custom APIs.
+- **Reports and Dashboards**: Get comprehensive insights into your security posture.
+
+Endgame is designed for both automated threat detection and active threat hunting, making it a versatile tool for both incident response and long-term endpoint protection.
