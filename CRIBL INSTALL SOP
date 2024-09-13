@@ -1,0 +1,182 @@
+Standard Operating Procedure (SOP) for installing CRIBL, a leading data pipeline platform for managing and processing observability data:
+
+---
+
+### **Standard Operating Procedure for Installing CRIBL**
+
+**Document Title:** Installation of CRIBL  
+**Date:** [Insert Date]  
+**Author:** [Your Name / Department]  
+**Version:** 1.0  
+**Review Date:** [Insert Date]
+
+---
+
+### **1. Purpose**
+This SOP outlines the steps required to install CRIBL on a Linux server, ensuring the correct configuration of system requirements and software components for a successful installation.
+
+### **2. Scope**
+This procedure applies to system administrators or engineers responsible for deploying CRIBL in a production or non-production environment.
+
+### **3. Prerequisites**
+
+- A Linux-based server (RHEL/CentOS/Ubuntu/Debian or similar) with root access.
+- Minimum hardware requirements:
+  - CPU: 4 cores
+  - RAM: 16 GB
+  - Disk space: 100 GB available storage
+- Internet access to download installation files.
+- Python 3.x installed on the server.
+- Ports 9000 and 10080 open for CRIBL communication.
+- SSH access to the server.
+
+### **4. Tools & Materials**
+
+- Access to the CRIBL download URL or package.
+- A terminal or SSH client (e.g., PuTTY).
+- Text editor (e.g., nano, vim, or vi) for configuration files.
+
+### **5. Installation Procedure**
+
+#### **5.1 Prepare the Server Environment**
+1. **Update the System Packages**
+   ```bash
+   sudo apt-get update   # For Ubuntu/Debian systems
+   sudo yum update       # For CentOS/RHEL systems
+   ```
+
+2. **Install Required Dependencies**
+   Ensure the following packages are installed:
+   ```bash
+   sudo apt-get install -y curl tar sudo vim wget # Ubuntu/Debian
+   sudo yum install -y curl tar sudo vim wget     # CentOS/RHEL
+   ```
+
+3. **Set up Python 3.x (if not installed)**
+   ```bash
+   sudo apt-get install python3   # Ubuntu/Debian
+   sudo yum install python3       # CentOS/RHEL
+   ```
+
+#### **5.2 Download and Install CRIBL**
+1. **Download the Latest CRIBL Package**
+   Visit the official CRIBL website and download the latest version:
+   ```bash
+   wget https://cdn.cribl.io/dl/latest/cribl-linux-x64.tgz
+   ```
+
+2. **Extract the Package**
+   ```bash
+   tar -xvzf cribl-linux-x64.tgz
+   ```
+
+3. **Move CRIBL to the Appropriate Directory**
+   Move the extracted files to `/opt`:
+   ```bash
+   sudo mv cribl /opt/cribl
+   ```
+
+4. **Set Up Directory Permissions**
+   Ensure correct ownership and permissions:
+   ```bash
+   sudo chown -R $(whoami):$(whoami) /opt/cribl
+   ```
+
+5. **Create a Symbolic Link (Optional)**
+   For easier access to the CRIBL binary:
+   ```bash
+   sudo ln -s /opt/cribl/bin/cribl /usr/local/bin/cribl
+   ```
+
+#### **5.3 Configure CRIBL**
+1. **Initialize CRIBL**
+   Navigate to the CRIBL directory and run the initial setup:
+   ```bash
+   cd /opt/cribl/bin
+   ./cribl start
+   ```
+
+2. **Access CRIBL Web UI**
+   After CRIBL starts, access the web interface by opening a browser and navigating to:
+   ```
+   http://<server_ip>:9000
+   ```
+
+3. **Configure the System Settings**
+   Follow the guided instructions in the CRIBL Web UI to configure your instance, including:
+   - Admin credentials
+   - License information
+   - Data pipeline settings
+
+#### **5.4 Set Up CRIBL as a System Service**
+1. **Create a CRIBL Service File**
+   Create a service file to run CRIBL as a background service:
+   ```bash
+   sudo nano /etc/systemd/system/cribl.service
+   ```
+
+   Add the following content:
+   ```ini
+   [Unit]
+   Description=CRIBL Log Data Pipeline
+   After=network.target
+
+   [Service]
+   ExecStart=/opt/cribl/bin/cribl start
+   ExecStop=/opt/cribl/bin/cribl stop
+   Restart=on-failure
+   User=root
+   WorkingDirectory=/opt/cribl
+   LimitNOFILE=65536
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+2. **Reload the Systemd Daemon**
+   ```bash
+   sudo systemctl daemon-reload
+   ```
+
+3. **Enable and Start the CRIBL Service**
+   Enable CRIBL to start at boot and start the service:
+   ```bash
+   sudo systemctl enable cribl
+   sudo systemctl start cribl
+   ```
+
+4. **Check CRIBL Service Status**
+   Verify that the service is running:
+   ```bash
+   sudo systemctl status cribl
+   ```
+
+### **6. Verification**
+- Open the CRIBL Web UI by visiting `http://<server_ip>:9000`.
+- Confirm that the CRIBL service is running correctly.
+- Review CRIBL logs for any potential errors:
+  ```bash
+  tail -f /opt/cribl/log/cribl.log
+  ```
+
+### **7. Troubleshooting**
+- If CRIBL fails to start, check the system logs for errors:
+  ```bash
+  sudo journalctl -xe | grep cribl
+  ```
+- Ensure all dependencies are installed and correct permissions are applied.
+
+### **8. Maintenance**
+- To stop or restart CRIBL, use:
+  ```bash
+  sudo systemctl stop cribl
+  sudo systemctl restart cribl
+  ```
+
+---
+
+**End of SOP**
+
+--- 
+
+This SOP ensures a structured and secure installation of CRIBL on a Linux server.
