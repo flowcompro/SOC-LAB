@@ -1,0 +1,91 @@
+### How to Set Up a Windows Server 2022 as a Domain Controller for `contoso01labs.com`
+
+This guide outlines the steps to configure a Windows Server 2022 as a Domain Controller (DC) with the following details:
+
+- **Domain Name**: contoso01labs.com  
+- **DC IP Address**: 192.168.0.40  
+- **Subnet Mask**: 255.255.255.0  
+- **Default Gateway**: 10.192.0.1  
+- **DNS Forwarder**: 8.8.8.8  
+
+---
+
+#### **Step 1: Set Static IP Address**
+1. **Open Server Manager**:
+   - Click the **Start** button and select **Server Manager**.
+
+2. **Configure IP Address**:
+   - In Server Manager, go to **Local Server** and click on the **Ethernet** link.
+   - Select your network adapter and open **Properties**.
+   - Highlight **Internet Protocol Version 4 (TCP/IPv4)** and click **Properties**.
+   - Set the following values:
+     - **IP Address**: 192.168.0.40
+     - **Subnet Mask**: 255.255.255.0
+     - **Default Gateway**: 10.192.0.1
+     - **Preferred DNS Server**: 192.168.0.40 (same as the server's IP since it will be a DNS server).
+
+---
+
+#### **Step 2: Install the Active Directory Domain Services (AD DS) Role**
+1. **Add Roles and Features**:
+   - In **Server Manager**, click on **Manage** > **Add Roles and Features**.
+   - Click **Next** until you reach the **Server Roles** section.
+
+2. **Select AD DS**:
+   - Check the **Active Directory Domain Services** role.
+   - When prompted, click **Add Features**.
+   - Click **Next** until you reach the **Confirmation** page, and then click **Install**.
+
+3. **Wait for Installation**:
+   - After installation, click **Close**.
+
+---
+
+#### **Step 3: Promote the Server to a Domain Controller**
+1. **Promote to Domain Controller**:
+   - In **Server Manager**, click on the yellow triangle in the top-right corner and select **Promote this server to a domain controller**.
+
+2. **Deployment Configuration**:
+   - Choose **Add a new forest** and enter **contoso01labs.com** as the domain name. Click **Next**.
+
+3. **Domain Controller Options**:
+   - Set the **Forest functional level** and **Domain functional level** to **Windows Server 2022**.
+   - Ensure **DNS Server** is checked.
+   - Enter a **Directory Services Restore Mode (DSRM) password** and click **Next**.
+
+4. **DNS Options**:
+   - Ignore any warnings and click **Next**.
+
+5. **Paths**:
+   - Leave the default paths for the database, log files, and SYSVOL. Click **Next**.
+
+6. **Review and Install**:
+   - Review the settings and click **Install**. The server will restart after installation.
+
+---
+
+#### **Step 4: Configure the DNS Forwarder**
+1. **Open DNS Manager**:
+   - Open **Server Manager**, click **Tools**, and select **DNS**.
+
+2. **Set Forwarders**:
+   - In the DNS Manager, right-click the server name and select **Properties**.
+   - Go to the **Forwarders** tab and click **Edit**.
+   - Add **8.8.8.8** as the forwarder and click **OK**.
+
+3. **Apply Settings**:
+   - Click **Apply** and then **OK** to save the configuration.
+
+---
+
+#### **Step 5: Verify the Configuration**
+1. **Check Domain Functionality**:
+   - Log in to the server and confirm that it’s now part of the `contoso01labs.com` domain.
+   - Use the command `dcdiag` in PowerShell to test the domain controller's health.
+
+2. **Test DNS Resolution**:
+   - Run `nslookup` and check if the DNS resolves internal and external domains (e.g., `contoso01labs.com` and `google.com`).
+
+---
+
+Your Windows Server 2022 is now successfully configured as a Domain Controller for `contoso01labs.com` with the specified network settings and DNS forwarder.
