@@ -1,0 +1,9 @@
+Stop the EventLog Analyzer service.
+2Open the Command Prompt with administrative privilege.
+3Navigate to the <EventLog Analyzer Home>\bin folder.
+4Type these three commands to ensure the proper shutdown of the application: shutdown.bat, stopDB.bat, and stopSEC.bat.
+Note: StopDB.bat is only meant for the default database (PostgreSQL). If you use MS SQL, please ignore this command. Kindly execute shutdown.bat and stopSEC.bat.
+5Execute UpdateManager.bat.
+6Click on Browse and select the appropriate PPM file.
+7Click Install. Please wait for it to complete.
+8Start the application and check the build number.
