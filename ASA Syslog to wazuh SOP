@@ -1,0 +1,223 @@
+SOP
+
+Title: Forwarding Cisco ASA Syslog Events to Wazuh SIEM
+Document Type: Standard Operating Procedure
+Audience: SOC Analysts, Network Engineers, Security Engineers
+Purpose:
+To document the configuration and validation steps required to send Cisco ASA syslog messages to a Wazuh Manager for centralized logging, analysis, and alerting.
+
+1. Scope
+
+This SOP covers:
+
+Cisco ASA syslog configuration
+
+Transport of syslog messages over TCP
+
+Linux rsyslog handling on the Wazuh server
+
+Wazuh log ingestion via logcollector
+
+Verification of log visibility and alerts in Wazuh
+
+This procedure assumes the Wazuh Manager is deployed on Linux and reachable from the ASA.
+
+2. Architecture Overview
+
+Cisco ASA generates syslog messages
+
+Syslog Transport: TCP port 1516
+
+Receiver: rsyslog on the Wazuh Manager
+
+Log File: /var/log/asa/asa.log
+
+Wazuh Component: wazuh-logcollector
+
+Analysis Engine: wazuh-analysisd
+
+Visualization: Wazuh Dashboard (OpenSearch)
+
+3. Prerequisites
+3.1 Network Requirements
+
+ASA must be able to reach the Wazuh Manager IP
+
+TCP port 1516 allowed between ASA and Wazuh
+
+No intermediate firewall blocking syslog traffic
+
+3.2 System Requirements
+
+Wazuh Manager installed and running
+
+rsyslog installed and enabled on Wazuh server
+
+Root or sudo access on Wazuh server
+
+CLI access to Cisco ASA
+
+4. Cisco ASA Configuration
+4.1 Enable Syslog Logging
+
+On the Cisco ASA CLI:
+
+logging enable
+logging timestamp
+logging trap informational
+
+
+This enables logging and sets the severity level.
+
+4.2 Configure Remote Syslog Server
+logging host inside 10.192.30.95 tcp/1516
+
+
+inside is the ASA interface used to reach the Wazuh server
+
+10.192.30.95 is the Wazuh Manager IP
+
+TCP is used for reliable delivery
+
+4.3 Verify ASA Syslog Status
+show logging | include 10.192.30.95
+
+
+Expected output example:
+
+Logging to Servers 10.192.30.95 tcp/1516 Connected TX:102759
+
+
+This confirms the ASA is actively sending logs.
+
+5. Wazuh Server Configuration
+5.1 rsyslog Listener Configuration
+
+Ensure rsyslog is listening on TCP port 1516.
+
+Example rsyslog configuration snippet:
+
+module(load="imtcp")
+input(type="imtcp" port="1516")
+
+$template ASAFormat,"/var/log/asa/asa.log"
+if $fromhost-ip == '10.192.30.1' then ?ASAFormat
+& stop
+
+
+Restart rsyslog:
+
+sudo systemctl restart rsyslog
+
+5.2 Verify rsyslog Is Listening
+sudo ss -lntp | grep 1516
+
+
+Expected output:
+
+LISTEN 0 25 0.0.0.0:1516 users:(("rsyslogd",pid=XXXX))
+
+5.3 Verify ASA Log File Population
+sudo tail -f /var/log/asa/asa.log
+
+
+You should see live ASA messages such as:
+
+%ASA-6-305011: Built dynamic TCP translation...
+
+6. Wazuh Configuration
+6.1 Configure Log Collection
+
+Edit the Wazuh configuration file:
+
+sudo nano /var/ossec/etc/ossec.conf
+
+
+Add or verify the following localfile block exists once:
+
+<localfile>
+  <log_format>syslog</log_format>
+  <location>/var/log/asa/asa.log</location>
+</localfile>
+
+6.2 Restart Wazuh Manager
+sudo systemctl restart wazuh-manager
+
+
+Verify status:
+
+sudo systemctl status wazuh-manager
+
+
+Expected state:
+
+Active: active (running)
+
+6.3 Confirm Logcollector Activity
+sudo grep "Analyzing file: '/var/log/asa/asa.log'" /var/ossec/logs/ossec.log
+
+
+Expected output:
+
+wazuh-logcollector: INFO: (1950): Analyzing file: '/var/log/asa/asa.log'
+
+7. Validation and Verification
+7.1 Confirm Alerts Are Generated
+sudo tail -n 20 /var/ossec/logs/alerts/alerts.json | grep asa.log
+
+
+Expected fields:
+
+"decoder":"cisco-ios"
+
+"groups":["syslog","cisco_ios"]
+
+"location":"/var/log/asa/asa.log"
+
+7.2 Verify in Wazuh Dashboard
+
+In the Wazuh Web UI:
+
+Navigate to Security Events
+
+Use index pattern:
+
+wazuh-alerts-*
+
+
+Apply filter:
+
+data.cisco.facility : "ASA"
+
+
+Confirm ASA events are visible and updating
+
+8. Troubleshooting Notes
+Symptom	Action
+ASA connected but no logs	Check rsyslog listener and file permissions
+Log file exists but no alerts	Verify Wazuh localfile entry
+Duplicate alerts	Check for duplicate localfile blocks
+TCP connection drops	Verify ASA interface and routing
+9. Security and Best Practices
+
+Prefer TCP syslog over UDP for reliability
+
+Restrict syslog port exposure using firewall rules
+
+Monitor log volume to avoid disk exhaustion
+
+Periodically review ASA rule mappings in Wazuh
+
+10. Outcome
+
+At completion of this SOP:
+
+Cisco ASA syslogs are reliably sent to Wazuh
+
+Logs are parsed using Cisco IOS decoders
+
+Security alerts are generated and visible in dashboards
+
+Centralized monitoring of firewall activity is achieved
+
+If you want, next we can:
