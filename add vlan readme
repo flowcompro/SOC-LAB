@@ -1,0 +1,35 @@
+# Cisco IOS / IOS XE VLAN Trunk Manager
+
+**Version:** v14  
+**Author:** Kevin Flowers  
+
+A safe, automation-ready Python tool for managing VLANs across Cisco IOS and IOS XE switches.
+
+---
+
+## Features
+
+- Automatically discovers trunk ports
+- Adds only missing VLANs to trunks
+- Removes VLANs safely with dependency checks
+- Optional SVI deletion
+- Optional global VLAN database cleanup
+- Built-in verification and backups
+- Designed for production networks
+
+---
+
+## Requirements
+
+- Python 3.9+
+- Netmiko
+- SSH access to switches
+- Enable secret access
+
+---
+
+## Files
+
+### Switch Inventory
+
+**TXT**
