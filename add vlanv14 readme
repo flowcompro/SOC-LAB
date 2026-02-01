@@ -1,0 +1,134 @@
+# Cisco IOS / IOS XE VLAN Trunk Manager
+
+**Version:** v14  
+**Author:** Kevin Flowers  
+
+A safe, automation-ready Python tool for managing VLANs across Cisco IOS and IOS XE switches.
+
+---
+
+## Features
+
+- Automatically discovers trunk ports
+- Adds only missing VLANs to trunks
+- Removes VLANs safely with dependency checks
+- Optional SVI deletion
+- Optional global VLAN database cleanup
+- Built-in verification and backups
+- Designed for production networks
+
+---
+
+## Requirements
+
+- Python 3.9+
+- Netmiko
+- SSH access to switches
+- Enable secret access
+
+---
+
+## Files
+
+### Switch Inventory
+
+**TXT**
+
+
+10.192.25.14
+10.192.25.10
+
+
+**CSV**
+```csv
+ip
+10.192.25.14
+10.192.25.10
+
+VLAN File
+
+CSV
+
+vlan_id,name
+300,test
+999,NATIVE_PARKING
+
+Commands
+Add VLANs
+
+Creates missing VLANs and adds them to trunks.
+
+python addvlansv14.py --switches switches.txt --vlans vlans.csv --verbose
+
+Remove VLANs (Full Cleanup)
+
+Removes VLANs from trunks, deletes SVI if present, then deletes VLAN globally.
+
+python addvlansv14.py --switches switches.txt --vlans vlans.csv \
+--remove --delete-svi --delete-vlans-global --verbose --verify
+
+Dry Run
+
+Preview changes without modifying devices.
+
+python addvlansv14.py --switches switches.txt --vlans vlans.csv --dry-run --verbose
+
+Important Behavior
+
+VLANs remain in show vlan unless --delete-vlans-global is used
+
+VLAN deletion is blocked if:
+
+SVI exists
+
+VLAN is still referenced
+
+v14 uses strict SVI detection:
+
+show running-config | section ^interface Vlan<ID>$
+
+Output
+
+Backups:
+
+output_vlan_push/backups/<ip>/<timestamp>/
+
+
+Session logs:
+
+output_vlan_push/session_<ip>_<timestamp>.log
+
+License
+
+Internal / Operational Use
+
+
+---
+
+# 3️⃣ Auto-Generated `--help` Output (Mirrors Script Behavior)
+
+This is what your argparse help should look like.
+
+```text
+usage: addvlansv14.py --switches FILE --vlans FILE [options]
+
+Cisco IOS / IOS XE VLAN Trunk Manager v14
+
+required arguments:
+  --switches FILE         Switch inventory file (TXT or CSV)
+  --vlans FILE            VLAN definition file (TXT or CSV)
+
+optional arguments:
+  --remove                Enable REMOVE mode (default is ADD mode)
+  --delete-svi            Remove interface Vlan<ID> if present (REMOVE mode)
+  --delete-vlans-global   Delete VLANs from VLAN database using 'no vlan <ID>'
+  --verify                Verify VLAN removal and report status
+  --verbose               Print detailed per-port VLAN decisions
+  --dry-run               Show changes without applying them
+  --out DIR               Output directory (default: output_vlan_push)
+
+behavior notes:
+  - VLANs are added only if missing
+  - VLANs are removed only if present
+  - Global VLAN deletion is blocked if dependencies exist
+  - Enable mode is automatically entered if required
