@@ -1,0 +1,134 @@
+# Import the Active Directory module
+Import-Module ActiveDirectory
+
+function Show-Menu {
+    Clear-Host
+    Write-Host "1: Count Users in AD"
+    Write-Host "2: Count Computer Objects in AD"
+    Write-Host "3: Count Groups in AD"
+    Write-Host "4: Accounts Created in Last X Days"
+    Write-Host "5: Computers Created in Last X Days"
+    Write-Host "6: Groups Created in Last X Days"
+    Write-Host "7: Inactive Accounts in Last 30 Days"
+    Write-Host "8: Inactive Accounts in Last X Days"
+    Write-Host "9: Computers Not Logged In in Last X Days"
+    Write-Host "10: Complete Report of Users, Computers, and Groups"
+    Write-Host "11: Deleted Objects in Last 5 Days"
+    Write-Host "0: Exit"
+}
+
+function Get-UserCount {
+    (Get-ADUser -Filter *).Count
+}
+
+function Get-ComputerCount {
+    (Get-ADComputer -Filter *).Count
+}
+
+function Get-GroupCount {
+    (Get-ADGroup -Filter *).Count
+}
+
+function Get-AccountsCreatedInLastXDays {
+    param (
+        [int]$days
+    )
+    $date = (Get-Date).AddDays(-$days)
+    Get-ADUser -Filter {whenCreated -ge $date} | Select-Object Name, whenCreated
+}
+
+function Get-ComputersCreatedInLastXDays {
+    param (
+        [int]$days
+    )
+    $date = (Get-Date).AddDays(-$days)
+    Get-ADComputer -Filter {whenCreated -ge $date} | Select-Object Name, whenCreated
+}
+
+function Get-GroupsCreatedInLastXDays {
+    param (
+        [int]$days
+    )
+    $date = (Get-Date).AddDays(-$days)
+    Get-ADGroup -Filter {whenCreated -ge $date} | Select-Object Name, whenCreated
+}
+
+function Get-InactiveAccountsLast30Days {
+    $date = (Get-Date).AddDays(-30)
+    Get-ADUser -Filter {lastLogonTimestamp -le $date} | Select-Object Name, lastLogonTimestamp
+}
+
+function Get-InactiveAccountsInLastXDays {
+    param (
+        [int]$days
+    )
+    $date = (Get-Date).AddDays(-$days)
+    Get-ADUser -Filter {lastLogonTimestamp -le $date} | Select-Object Name, lastLogonTimestamp
+}
+
+function Get-ComputersNotLoggedInInLastXDays {
+    param (
+        [int]$days
+    )
+    $date = (Get-Date).AddDays(-$days)
+    Get-ADComputer -Filter {lastLogonTimestamp -le $date} | Select-Object Name, lastLogonTimestamp
+}
+
+function Get-CompleteReport {
+    $userCount = Get-UserCount
+    $computerCount = Get-ComputerCount
+    $groupCount = Get-GroupCount
+    Write-Host "Users: $userCount"
+    Write-Host "Computers: $computerCount"
+    Write-Host "Groups: $groupCount"
+}
+
+function Get-DeletedObjectsLast5Days {
+    $date = (Get-Date).AddDays(-5)
+    Get-ADObject -Filter {isDeleted -eq $true -and whenChanged -ge $date} -IncludeDeletedObjects | Select-Object Name, whenChanged
+}
+
+do {
+    Show-Menu
+    $choice = Read-Host "Enter your choice"
+    switch ($choice) {
+        1 { Write-Host "User count in AD: $(Get-UserCount)" }
+        2 { Write-Host "Computer count in AD: $(Get-ComputerCount)" }
+        3 { Write-Host "Group count in AD: $(Get-GroupCount)" }
+        4 {
+            $days = Read-Host "Enter the number of days"
+            Get-AccountsCreatedInLastXDays -days $days | Format-Table -AutoSize
+        }
+        5 {
+            $days = Read-Host "Enter the number of days"
+            Get-ComputersCreatedInLastXDays -days $days | Format-Table -AutoSize
+        }
+        6 {
+            $days = Read-Host "Enter the number of days"
+            Get-GroupsCreatedInLastXDays -days $days | Format-Table -AutoSize
+        }
+        7 {
+            Write-Host "Inactive accounts in last 30 days:"
+            Get-InactiveAccountsLast30Days | Format-Table -AutoSize
+        }
+        8 {
+            $days = Read-Host "Enter the number of days"
+            Write-Host "Inactive accounts in last $days days:"
+            Get-InactiveAccountsInLastXDays -days $days | Format-Table -AutoSize
+        }
+        9 {
+            $days = Read-Host "Enter the number of days"
+            Write-Host "Computers not logged in last $days days:"
+            Get-ComputersNotLoggedInInLastXDays -days $days | Format-Table -AutoSize
+        }
+        10 { Get-CompleteReport }
+        11 {
+            Write-Host "Deleted objects in the last 5 days:"
+            Get-DeletedObjectsLast5Days | Format-Table -AutoSize
+        }
+        0 { Write-Host "Exiting..."; break }
+        default { Write-Host "Invalid choice, please select a valid option." }
+    }
+    Pause
+} while ($choice -ne 0)
+

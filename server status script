@@ -1,0 +1,179 @@
+# Define the path to the file containing the list of servers
+$serverListPath = "C:\Users\god\Downloads\Scripts\server status\serverlist.txt"
+# Define the path to the directory where logs will be stored
+$logDirectory = "C:\Users\god\Downloads\Scripts\server status\logs"
+# Define the network path to move logs
+$networkLogPath = "\\fs\share1\logs\serverstatus"
+# Define the interval to move logs (3 million seconds)
+$logMoveInterval = 3000000
+# Define the interval for checking servers (60 seconds)
+$checkInterval = 60
+
+# Create the log directory if it doesn't exist
+if (-not (Test-Path -Path $logDirectory)) {
+    New-Item -ItemType Directory -Path $logDirectory
+}
+
+# Function to clean up old log files
+function Cleanup-OldLogs {
+    $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt" | Sort-Object LastWriteTime -Descending
+    if ($logFiles.Count -gt 3000000) {
+        $filesToDelete = $logFiles | Select-Object -Skip 3000000
+        foreach ($file in $filesToDelete) {
+            Remove-Item -Path $file.FullName
+        }
+    }
+}
+
+# Function to move log files to network path
+function Move-LogFiles {
+    $logFiles = Get-ChildItem -Path $logDirectory -Filter "serverstats_*.txt"
+    foreach ($file in $logFiles) {
+        Move-Item -Path $file.FullName -Destination $networkLogPath
+    }
+}
+
+# Function to get the current timestamp
+function Get-Timestamp {
+    return (Get-Date).ToString("yyyyMMdd_HHmmss")
+}
+
+# Define function to check services and start if not running
+function Check-Services {
+    param (
+        [string]$server
+    )
+    $services = Get-WmiObject -ComputerName $server -Class Win32_Service |
+    Where-Object {
+        $_.StartMode -eq "Auto" -and $_.DelayedAutoStart -ne $true -and $_.State -ne "Running" -and
+        $_.Name -notin @("RemoteRegistry", "TrustedInstaller", "GoogleUpdaterInternalService128.0.6537.0", "GoogleUpdaterService128.0.6537.0")
+    }
+    
+    $serviceMessages = @()
+
+    foreach ($service in $services) {
+        $serviceName = $service.Name
+        $serviceController = Get-Service -ComputerName $server -Name $serviceName
+        Start-Service -InputObject $serviceController
+        $serviceMessages += "Service '$serviceName' was not running and has been started"
+    }
+
+    return $serviceMessages
+}
+
+# Define function to check CPU usage
+function Get-CPUUsage {
+    param (
+        [string]$server
+    )
+    Get-WmiObject -ComputerName $server -Class Win32_Processor | Measure-Object -Property LoadPercentage -Average | Select-Object -ExpandProperty Average
+}
+
+# Define function to check memory usage
+function Get-MemoryUsage {
+    param (
+        [string]$server
+    )
+    $memoryStatus = Get-WmiObject -ComputerName $server -Class Win32_OperatingSystem
+    $totalMemory = $memoryStatus.TotalVisibleMemorySize
+    $freeMemory = $memoryStatus.FreePhysicalMemory
+    $usedMemory = $totalMemory - $freeMemory
+    [math]::round(($usedMemory / $totalMemory) * 100, 2)
+}
+
+# Define function to check drive sizes
+function Get-DriveSizes {
+    param (
+        [string]$server
+    )
+    Get-WmiObject -ComputerName $server -Class Win32_LogicalDisk -Filter "DriveType=3 AND DeviceID!='D:'" | Select-Object DeviceID, Size, FreeSpace
+}
+
+# Function to display output for a server
+function Display-ServerStatus {
+    param (
+        [string]$server
+    )
+    $output = "Checking server: $server`n"
+
+    # Check services and start if not running
+    $servicesOutput = @()
+    $servicesNotRunningMessages = Check-Services -server $server
+    if ($servicesNotRunningMessages) {
+        foreach ($message in $servicesNotRunningMessages) {
+            $servicesOutput += $message
+        }
+    } else {
+        $message = "All automatic services are running"
+        $servicesOutput += $message
+    }
+    $output += ($servicesOutput -join "`n") + "`n"
+
+    # Check CPU usage
+    $cpuUsage = Get-CPUUsage -server $server
+    $message = "CPU Usage: ${cpuUsage}%"
+    $output += $message + "`n"
+
+    # Check memory usage
+    $memoryUsage = Get-MemoryUsage -server $server
+    $message = "Memory Usage: ${memoryUsage}%"
+    $output += $message + "`n"
+
+    # Check drive sizes
+    $driveSizes = Get-DriveSizes -server $server
+    foreach ($drive in $driveSizes) {
+        $freeSpacePercent = [math]::round(($drive.FreeSpace / $drive.Size) * 100, 2)
+        $message = "Drive $($drive.DeviceID) has $freeSpacePercent% free space"
+        $output += $message + "`n"
+    }
+
+    $output += "`n"
+    return $output
+}
+
+# Function to display the countdown timer
+function Display-Countdown {
+    param (
+        [int]$seconds
+    )
+    for ($i = $seconds; $i -gt 0; $i--) {
+        Write-Host -NoNewline "`rTime left before next check: $i seconds"
+        Start-Sleep -Seconds 1
+    }
+    Write-Host ""
+}
+
+# Variable to track the last log move time
+$lastLogMoveTime = [datetime]::Now
+
+# Monitor servers continuously
+while ($true) {
+    Clear-Host
+    $servers = Get-Content -Path $serverListPath
+    foreach ($server in $servers) {
+        $output = Display-ServerStatus -server $server
+
+        # Write the log content to the file
+        $timestamp = Get-Timestamp
+        $logFilePath = "$logDirectory\serverstats_${server}_$timestamp.txt"
+        Set-Content -Path $logFilePath -Value $output
+
+        # Display the output
+        Write-Host ""
+        Write-Host $output
+        Write-Host ""
+    }
+
+    # Clean up old log files
+    Cleanup-OldLogs
+
+    # Check if it's time to move the log files
+    $currentTime = [datetime]::Now
+    if (($currentTime - $lastLogMoveTime).TotalSeconds -ge $logMoveInterval) {
+        Move-LogFiles
+        $lastLogMoveTime = $currentTime
+    }
+
+    # Display the countdown timer
+    Display-Countdown -seconds $checkInterval
+}
