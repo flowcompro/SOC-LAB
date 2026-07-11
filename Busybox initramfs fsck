@@ -1,0 +1,62 @@
+If you're in BusyBox, it's likely because the system dropped into an initramfs shell due to a problem with the root filesystem. You can run `fsck` from BusyBox to attempt repairs. Here's what to do:
+
+---
+
+### **Steps to Run `fsck` in BusyBox**:
+
+1. **Identify the Filesystem**:
+   - First, determine the root partition device:
+     ```bash
+     ls /dev
+     ```
+   - Common root partition names are `/dev/sda1`, `/dev/nvme0n1p1`, or similar.
+
+2. **Run `fsck`**:
+   - Use the following command to check and repair the filesystem:
+     ```bash
+     fsck /dev/sdX
+     ```
+     Replace `/dev/sdX` with your actual root partition name.
+
+   - If you want `fsck` to automatically fix errors, add the `-y` flag:
+     ```bash
+     fsck -y /dev/sdX
+     ```
+
+3. **Reboot**:
+   - Once `fsck` completes, reboot the system:
+     ```bash
+     reboot
+     ```
+
+---
+
+### **If You're Unsure of the Root Partition**:
+1. **Check for Available Partitions**:
+   - Run:
+     ```bash
+     blkid
+     ```
+     This lists available partitions and their types.
+
+2. **Mount Partitions to Confirm**:
+   - If unsure which partition is the root filesystem, you can try mounting them:
+     ```bash
+     mount /dev/sdX /mnt
+     ls /mnt
+     ```
+   - Check for familiar directories like `etc`, `usr`, `var`, etc.
+
+   - Unmount after verification:
+     ```bash
+     umount /mnt
+     ```
+
+3. **Retry `fsck`**:
+   - Once you've identified the correct partition, run `fsck` as above.
+
+---
+
+### **If the Problem Persists**:
+1. Boot from a live USB and run `fsck` from there. This method ensures the root filesystem is unmounted and avoids further issues.
+2. To access the BusyBox shell, check for logs or use tools like `dmesg` to investigate what caused the system to drop into initramfs.

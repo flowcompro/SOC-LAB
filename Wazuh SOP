@@ -1,0 +1,131 @@
+### Standard Operating Procedure (SOP) for Wazuh Maintenance and Monitoring
+
+#### Objective:
+This SOP outlines the daily, weekly, monthly, and yearly tasks required for the maintenance and monitoring of the Wazuh security platform. These tasks ensure optimal performance, security, and compliance with organizational policies.
+
+---
+
+## **1. Daily Tasks**
+
+### **1.1 Monitor Dashboard**
+- **Action:** Log into the Wazuh dashboard and review the status of all agents.
+  - **Check:** Ensure all agents are running and connected.
+  - **Alert Resolution:** Review and address any critical alerts or issues.
+  - **Tools:** Wazuh Dashboard, Notifications
+
+### **1.2 Check Alerts**
+- **Action:** Review alerts for any critical events (e.g., unauthorized access attempts, suspicious file changes).
+  - **Priority:** Focus on high-severity alerts.
+  - **Resolution:** Investigate and remediate any security incidents immediately.
+  - **Tools:** Wazuh Alert Section, SIEM Integration
+
+### **1.3 Agent Status**
+- **Action:** Ensure that no agents are disconnected or down.
+  - **Resolution:** Reconnect or troubleshoot any disconnected agents.
+  - **Tools:** `/var/ossec/bin/manage_agents`, Wazuh Dashboard
+
+### **1.4 Log Collection**
+- **Action:** Ensure all log sources are properly collected and no logs are missing.
+  - **Check:** Look for any gaps in logging from integrated systems.
+  - **Tools:** Log Monitoring, Wazuh Log Management
+
+### **1.5 System Performance**
+- **Action:** Monitor Wazuh system resource usage (CPU, memory, disk).
+  - **Check:** Look for any anomalies in system performance.
+  - **Tools:** System Monitoring Tools (e.g., `top`, `htop`)
+
+---
+
+## **2. Weekly Tasks**
+
+### **2.1 Agent Update Check**
+- **Action:** Check if any agents need updates (Wazuh, OS, or any security patches).
+  - **Resolution:** Apply updates or patch the agents as needed.
+  - **Tools:** Wazuh Update Manager, SSH
+
+### **2.2 Rule Set Review**
+- **Action:** Review the rules and policies applied to the Wazuh system.
+  - **Check:** Ensure rules are up-to-date and fine-tuned to reduce false positives.
+  - **Tools:** Wazuh Rules Editor, OpenSCAP, CIS Benchmarking
+
+### **2.3 Backup Verification**
+- **Action:** Verify the integrity of daily backups.
+  - **Check:** Ensure backups are successful and accessible.
+  - **Tools:** Backup Management System
+
+### **2.4 Review Integration Logs**
+- **Action:** Ensure all external integrations (e.g., SIEM, ticketing systems) are functioning properly.
+  - **Check:** No communication failures or log drops.
+  - **Tools:** Wazuh Integration Logs
+
+### **2.5 Disk Space Check**
+- **Action:** Monitor disk usage on Wazuh servers, especially in `/var/ossec` and log directories.
+  - **Tools:** Disk Monitoring Tools (`df`, `du`)
+
+---
+
+## **3. Monthly Tasks**
+
+### **3.1 System Update**
+- **Action:** Apply security updates to Wazuh server and agents.
+  - **Check:** Perform patch management and version upgrades if necessary.
+  - **Tools:** Package Manager (e.g., `apt`, `yum`), Wazuh Update Scripts
+
+### **3.2 Log Retention Review**
+- **Action:** Review log retention policies to ensure compliance with company regulations.
+  - **Check:** Ensure logs are archived or deleted as per the data retention policy.
+  - **Tools:** Wazuh Log Rotation Configuration
+
+### **3.3 Review User Accounts**
+- **Action:** Review access control lists (ACLs) and user roles.
+  - **Check:** Remove any unnecessary users and ensure proper role assignments.
+  - **Tools:** Wazuh Dashboard, User Management
+
+### **3.4 Review Alerts and Trends**
+- **Action:** Analyze recurring alerts and trends over the last month.
+  - **Resolution:** Fine-tune alerting mechanisms and adjust thresholds.
+  - **Tools:** Wazuh Reporting Tools, SIEM Dashboards
+
+### **3.5 Incident Response Drill**
+- **Action:** Conduct a simulated incident response using Wazuh.
+  - **Check:** Test the alerting, notification, and remediation process.
+  - **Tools:** Incident Response Playbook, Wazuh Alerting System
+
+---
+
+## **4. Yearly Tasks**
+
+### **4.1 Full System Audit**
+- **Action:** Perform a complete audit of the Wazuh platform.
+  - **Check:** Review rules, policies, agent configurations, and performance metrics.
+  - **Resolution:** Adjust configurations to meet any new security policies or changes in infrastructure.
+  - **Tools:** Wazuh Audit Reports, Security Audits
+
+### **4.2 Disaster Recovery Testing**
+- **Action:** Perform a full disaster recovery test to ensure backups and restore processes are functioning.
+  - **Check:** Test backup restoration, failover procedures, and system redundancy.
+  - **Tools:** Backup and Recovery Systems
+
+### **4.3 Policy and Compliance Review**
+- **Action:** Review the system’s compliance with internal policies and industry standards (e.g., HIPAA, PCI-DSS, GDPR).
+  - **Check:** Ensure Wazuh's configurations meet regulatory requirements.
+  - **Tools:** OpenSCAP, CIS Benchmark Reports
+
+### **4.4 Performance Review**
+- **Action:** Evaluate the overall performance of the Wazuh infrastructure.
+  - **Check:** Identify any scaling needs or bottlenecks.
+  - **Tools:** Performance Monitoring Tools
+
+---
+
+### **Documentation and Reporting**
+- **Daily:** Document critical incidents, remediation steps, and system status.
+- **Weekly:** Summarize key issues, updates, and rule changes.
+- **Monthly:** Submit a comprehensive report including logs, incident analysis, and security trends.
+- **Yearly:** Prepare an annual review that includes audits, system health, compliance, and strategic improvements.
+
+---
+
+**End of SOP**
+
+This SOP provides a structured and clear guide for maintaining Wazuh across various time intervals to ensure the security platform operates effectively. Adjustments to this procedure may be necessary based on specific organizational needs or regulatory requirements.

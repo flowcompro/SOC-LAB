@@ -1,0 +1,78 @@
+KAPE (Kroll Artifact Parser and Extractor) is a forensic tool used to quickly collect and process forensic artifacts from a system, making it a powerful tool for incident response and digital forensics. Here's how you can use KAPE to collect and parse data:
+
+### Steps to Use KAPE:
+
+#### 1. **Download KAPE**
+   You can download KAPE from [its official GitHub page](https://github.com/EricZimmerman/KapeFiles). Extract the downloaded zip file to a directory on your system.
+
+#### 2. **Run KAPE from the Command Line**
+   Open a **Command Prompt** or **PowerShell** window with **administrator privileges**, and navigate to the directory where you extracted KAPE.
+
+#### 3. **Understanding KAPE Components**
+   - **Targets**: These specify what forensic data you want to collect (e.g., event logs, registry files, browser history).
+   - **Modules**: After collection, modules can be used to parse the collected data into readable formats (e.g., CSV).
+
+   KAPE can be run in two modes:
+   - **Target Mode** (`kape.exe --t`) – For collecting data (artifacts).
+   - **Module Mode** (`kape.exe --m`) – For processing or parsing collected data.
+
+#### 4. **Running KAPE in Target Mode (Collecting Data)**
+
+   Here's an example command to run KAPE to collect specific data:
+
+   ```cmd
+   kape.exe --tsource C: --tdest D:\KAPE_Output --target WindowsEventLogs --vhd
+   ```
+
+   Explanation:
+   - `--tsource C:`: This specifies the source drive from which to collect data (in this case, the `C:` drive).
+   - `--tdest D:\KAPE_Output`: This is the directory where the collected data will be saved.
+   - `--target WindowsEventLogs`: Specifies the specific target to collect, such as Windows Event Logs.
+   - `--vhd`: Optional switch that tells KAPE to create a VHD (Virtual Hard Disk) file with the collected data.
+
+   **Note:** Targets are pre-defined in the `Targets` folder of the KAPE directory. You can view available targets by listing the contents of this folder.
+
+#### 5. **Running KAPE in Module Mode (Processing Data)**
+   
+   After collecting the data, you can use KAPE modules to parse the collected data into a readable format:
+
+   ```cmd
+   kape.exe --msource D:\KAPE_Output --mdest D:\KAPE_Parsed --module EventLogs --vhd
+   ```
+
+   Explanation:
+   - `--msource D:\KAPE_Output`: This specifies the location of the collected data from the previous step.
+   - `--mdest D:\KAPE_Parsed`: This is the directory where the parsed data will be saved.
+   - `--module EventLogs`: This specifies the module to process the event log data collected.
+   - `--vhd`: Optional switch to create a VHD file with the processed data.
+
+   Modules are pre-defined in the `Modules` folder of the KAPE directory. You can view available modules by listing the contents of this folder.
+
+#### 6. **Combining Target and Module Mode in One Command**
+   You can run both modes (target and module) in a single command for efficiency:
+
+   ```cmd
+   kape.exe --tsource C: --tdest D:\KAPE_Output --target WindowsEventLogs --msource D:\KAPE_Output --mdest D:\KAPE_Parsed --module EventLogs --vhd
+   ```
+
+#### 7. **Reviewing the Output**
+   Once KAPE finishes its collection and processing, you can review the collected and parsed data from the destination folders (`--tdest` and `--mdest`). The data will typically be in formats like CSV or other readable formats for analysis.
+
+### Commonly Used Targets and Modules
+- **Common Targets**:
+  - `WindowsEventLogs`: Collects Windows event logs.
+  - `Registry`: Collects Windows registry hives.
+  - `UserProfile`: Collects user profile information.
+  - `BrowserHistory`: Collects browser history.
+
+- **Common Modules**:
+  - `EventLogs`: Parses Windows Event Logs.
+  - `RegistryExplorer`: Parses registry hives.
+  - `BrowserHistory`: Parses browser history.
+
+### KAPE Best Practices:
+- Always **test KAPE** on a non-production environment before using it on live systems.
+- **Read KAPE documentation** to fully understand each target and module and how they can be customized for specific investigations.
+- Keep KAPE up to date by regularly checking the GitHub repository for new targets and modules.
+
+By following these steps, you can quickly gather and process forensic data from a Windows system using KAPE.

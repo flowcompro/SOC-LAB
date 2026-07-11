@@ -1,0 +1,50 @@
+Cisco IOS / IOS XE VLAN Trunk Manager
+Version: v14
+Author: Kevin Flowers
+
+PURPOSE
+Safely add or remove VLANs across multiple Cisco switches by:
+- Discovering trunk ports automatically
+- Adding only missing VLANs
+- Removing VLANs cleanly from trunks and VLAN database
+- Preventing accidental deletion when blockers exist
+
+FILES REQUIRED
+- switches.txt or switches.csv
+- vlans.txt or vlans.csv
+
+CREDENTIALS
+You will be prompted for:
+- Username
+- Password
+- Enable secret (asked once, reused)
+
+ADD VLANs (standard operation)
+Creates VLANs if missing and adds them to trunk ports.
+
+Command:
+python addvlansv14.py --switches switches.txt --vlans vlans.csv --verbose
+
+REMOVE VLANs (full cleanup)
+Removes VLANs from trunks, deletes SVI if present, then deletes VLAN globally.
+
+Command:
+python addvlansv14.py --switches switches.txt --vlans vlans.csv --remove --delete-svi --delete-vlans-global --verbose --verify
+
+SAFE PREVIEW (no changes)
+Shows exactly what would be done.
+
+Command:
+python addvlansv14.py --switches switches.txt --vlans vlans.csv --dry-run --verbose
+
+IMPORTANT NOTES
+- Removing a VLAN from trunks does NOT remove it from show vlan
+- To fully remove a VLAN, --delete-vlans-global must be used
+- VLAN deletion is blocked if:
+  - An SVI exists
+  - The VLAN is still referenced
+- v14 uses strict SVI detection to avoid false blockers
+
+OUTPUT
+- Backups: output_vlan_push\backups\<ip>\<timestamp>\
+- Logs: output_vlan_push\session_<ip>_<timestamp>.log
